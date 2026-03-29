@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ajouter un projet - Papa Alioune Mbaye</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header id="header-principal">
+      <h1>Papa Alioune Mbaye</h1>
+      <p>Administration Système, Réseaux et Sécurité</p>
+    </header>
+
+    <nav>
+      <ul>
+        <li><a href="lister-projets.html">Lister les projets</a></li>
+        <li><a href="detailler-projet.html">Détailler un projet</a></li>
+        <li><a href="ajouter-projet.html">Ajouter un projet</a></li>
+      </ul>
+    </nav>
+
+    <main>
+      <h2>Ajouter un nouveau projet</h2>
+
+      <form action="#" method="post" enctype="multipart/form-data">
+        <p>
+          <label for="libelle">Libellé du projet :</label><br />
+          <input
+            type="text"
+            id="libelle"
+            name="libelle"
+            placeholder="Ex : Projet sécurité réseau"
+            required
+          />
+        </p>
+
+        <p>
+          <label for="description">Description :</label><br />
+          <textarea
+            id="description"
+            name="description"
+            placeholder="Décrivez votre projet en quelques lignes"
+            required
+          ></textarea>
+        </p>
+
+        <p>
+          <label for="technologies">Technologies :</label><br />
+          <input
+            type="text"
+            id="technologies"
+            name="technologies"
+            placeholder="Ex : Wireshark, Linux, Python"
+            required
+          />
+        </p>
+
+        <p>
+          <label for="image">Image du projet :</label><br />
+          <input type="file" id="image" name="image" required />
+        </p>
+
+        <button type="submit" class="btn-submit">Valider</button>
+      </form>
+    </main>
+
+    <footer>
+      <p>&copy; 2026 Papa Alioune Mbaye - Tous droits réservés.</p>
+    </footer>
+  </body>
+</html>

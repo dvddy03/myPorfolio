@@ -1,0 +1,183 @@
+/* Reset basique : illustre le modèle de boîte et supprime les marges/paddings par défaut */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Style global du document */
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #e0e0e0;
+  background-color: #1a1a2e;
+  line-height: 1.6;
+  padding: 20px;
+}
+
+/* Sélecteurs de type : titres, paragraphes, liens, images */
+h1 {
+  color: #f5a623;
+  margin-bottom: 8px;
+}
+
+h2 {
+  color: #f5a623;
+  margin: 16px 0;
+}
+
+p {
+  margin: 10px 0;
+}
+
+a {
+  color: #f5a623;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+img {
+  border: 2px solid #f5a623;
+  border-radius: 4px;
+  max-width: 100%;
+  height: auto;
+  margin: 10px 0;
+}
+
+/* Sélecteurs d'attribut : champs de texte et champ fichier */
+input[type='text'],
+input[type='file'] {
+  width: 100%;
+  max-width: 480px;
+  padding: 10px;
+  border: 1px solid #f5a623;
+  border-radius: 4px;
+  background-color: #22223b;
+  color: #e0e0e0;
+}
+
+textarea {
+  width: 100%;
+  max-width: 480px;
+  min-height: 120px;
+  padding: 10px;
+  border: 1px solid #f5a623;
+  border-radius: 4px;
+  background-color: #22223b;
+  color: #e0e0e0;
+}
+
+button {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 4px;
+  background-color: #f5a623;
+  color: #1a1a2e;
+  cursor: pointer;
+}
+
+/* Sélecteur d'identifiant : style spécifique à l'en-tête principal */
+#header-principal {
+  border-bottom: 2px solid #f5a623;
+  padding-bottom: 12px;
+  margin-bottom: 18px;
+}
+
+/* Sélecteurs de classe */
+.projet-card {
+  background-color: #22223b;
+  border: 1px solid #f5a623;
+  border-radius: 8px;
+  padding: 14px;
+  margin: 12px 0;
+}
+
+.btn-supprimer {
+  margin-top: 10px;
+  background-color: #c0392b;
+  color: #ffffff;
+}
+
+.btn-submit {
+  background-color: #f5a623;
+  font-weight: bold;
+}
+
+.lien-retour {
+  display: inline-block;
+  margin-top: 12px;
+  font-weight: bold;
+}
+
+/* Combinateur descendant */
+nav a {
+  padding: 4px 8px;
+}
+
+/* Combinateur enfant direct */
+ul > li {
+  margin-left: 18px;
+}
+
+/* Combinateur adjacent */
+h2 + p {
+  font-style: italic;
+}
+
+/* Template commun cohérent sur les 3 pages */
+header,
+nav,
+main,
+footer {
+  width: min(1100px, 100%);
+  margin: 0 auto;
+}
+
+nav {
+  background-color: #22223b;
+  border: 1px solid #f5a623;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  padding: 10px 14px;
+}
+
+/* Flexbox : navigation horizontale */
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Flexbox : grille de projets */
+.liste-projets {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.liste-projets > li {
+  flex: 1 1 320px;
+  margin-left: 0;
+}
+
+/* Flexbox : formulaire en colonne */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background-color: #22223b;
+  border: 1px solid #f5a623;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+footer {
+  border-top: 1px solid #f5a623;
+  margin-top: 24px;
+  padding-top: 12px;
+}
