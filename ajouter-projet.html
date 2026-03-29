@@ -23,12 +23,15 @@
     <main>
       <h2>Ajouter un nouveau projet</h2>
 
+      <!-- Formulaire avec enctype multipart pour l'upload de fichiers -->
       <form action="#" method="post" enctype="multipart/form-data">
+        <!-- <fieldset> et <legend> pour regrouper les champs par catégorie -->
         <fieldset class="groupe-formulaire">
           <legend>Informations principales</legend>
 
           <p>
             <label for="libelle">Libellé du projet :</label><br />
+            <!-- Attributs : id, name, placeholder, required -->
             <input
               type="text"
               id="libelle"
@@ -65,6 +68,7 @@
 
           <p>
             <label for="image">Image du projet :</label><br />
+            <!-- Sélecteur d'attribut CSS : input[type='file'] (voir style.css) -->
             <input type="file" id="image" name="image" accept=".png,.jpg,.jpeg" required />
           </p>
         </fieldset>

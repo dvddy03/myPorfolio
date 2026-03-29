@@ -7,12 +7,13 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <!-- En-tête principal avec identifiant pour illustrer le sélecteur #id -->
+    <!-- Balise sémantique <header> avec sélecteur d'identifiant #header-principal -->
     <header id="header-principal">
       <h1>Papa Alioune Mbaye</h1>
       <p>Administration Système, Réseaux et Sécurité</p>
     </header>
 
+    <!-- Navigation avec liste non ordonnée <ul> et liens <a> internes -->
     <nav>
       <ul>
         <li><a href="lister-projets.html">Lister les projets</a></li>
@@ -34,10 +35,13 @@
       <section aria-labelledby="liste-projets-titre">
         <h2 id="liste-projets-titre">Mes projets en cybersécurité et réseaux</h2>
 
+        <!-- Grille de projets avec Flexbox (voir style.css .liste-projets) -->
         <ul class="liste-projets">
           <li>
+            <!-- Élément <article> : balise sémantique pour un contenu autonome -->
             <article class="projet-card">
               <h3><a href="detailler-projet.html">Déploiement IDS/IPS avec Suricata et Snort</a></h3>
+              <!-- Balise auto-fermante <img> avec attributs src, alt et width -->
               <img
                 src="https://placehold.co/400x250/1a1a2e/e0e0e0?text=IDS+IPS"
                 alt="Illustration IDS IPS avec Suricata et Snort"
@@ -47,6 +51,7 @@
                 Mise en œuvre de Suricata et Snort pour la surveillance du trafic réseau et la
                 détection des menaces.
               </p>
+              <!-- Bouton Supprimer — fonctionnel avec JavaScript (hors scope HTML/CSS) -->
               <button type="button" class="btn-supprimer">Supprimer</button>
             </article>
           </li>
@@ -103,6 +108,7 @@
         </ul>
       </section>
 
+      <!-- Attribut aria-labelledby pour l'accessibilité -->
       <section aria-labelledby="contact-titre" class="bloc-informations">
         <h2 id="contact-titre">Informations de contact</h2>
         <ul>
