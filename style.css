@@ -1,4 +1,4 @@
-/* Reset basique : illustre le modèle de boîte et supprime les marges/paddings par défaut */
+﻿/* Reset basique : illustre le modèle de boîte et supprime les marges/paddings par défaut */
 * {
   margin: 0;
   padding: 0;
@@ -74,6 +74,30 @@ button {
   background-color: #f5a623;
   color: #1a1a2e;
   cursor: pointer;
+}
+button:hover {
+    opacity: 0.85;
+    transform: translateY(-1px);
+    transition: all 0.2s ease;
+}
+
+.btn-supprimer:hover {
+    background-color: #e74c3c;
+}
+
+.projet-card:hover {
+    border-color: #f5a623;
+    box-shadow: 0 4px 12px rgba(245, 166, 35, 0.2);
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    color: #ffc107;
+}
+
+nav a:hover {
+    background-color: rgba(245, 166, 35, 0.1);
+    border-radius: 4px;
 }
 
 /* Sélecteur d'identifiant : style spécifique à l'en-tête principal */
@@ -222,3 +246,4 @@ footer {
     flex-basis: 100%;
   }
 }
+
