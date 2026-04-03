@@ -11,6 +11,10 @@ Portfolio HTML/CSS de **Papa Alioune Mbaye** — Administration Système, Résea
 - `detailler-projet-iot.html` : détail du projet IoT (Arduino, MQTT)
 - `ajouter-projet.html` : formulaire d'ajout de projet
 - `style.css` : feuille de styles unique (Flexbox, sélecteurs, responsive)
+- `tailwind/index.html` : seconde version du portfolio en Tailwind CSS
+- `tailwind/projets.html` : liste des projets en Tailwind CSS
+- `tailwind/detailler-projet-*.html` : fiches projets en Tailwind CSS
+- `tailwind/ajouter-projet.html` : formulaire de projet en Tailwind CSS
 
 ## Concepts illustrés
 
