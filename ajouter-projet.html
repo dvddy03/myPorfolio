@@ -1,52 +1,60 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ajouter un projet - Papa Alioune Mbaye</title>
+    <title>Ajouter un projet | Papa Alioune Mbaye</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <header id="header-principal">
-      <h1>Papa Alioune Mbaye</h1>
-      <p>Administration Système, Réseaux et Sécurité</p>
+      <div>
+        <p class="eyebrow">Formulaire portfolio</p>
+        <h1>Papa Alioune Mbaye</h1>
+        <p>Administration Systeme, Reseaux, Cloud et Cybersecurite</p>
+      </div>
     </header>
 
-    <nav>
+    <nav aria-label="Navigation principale">
       <ul>
-        <li><a href="lister-projets.html">Lister les projets</a></li>
-        <li><a href="lister-projets.html">Accueil</a></li>
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="lister-projets.html">Projets</a></li>
         <li><a href="ajouter-projet.html">Ajouter un projet</a></li>
       </ul>
     </nav>
 
     <main>
-      <h2>Ajouter un nouveau projet</h2>
+      <section class="bloc-informations" aria-labelledby="ajout-projet-titre">
+        <p class="eyebrow">Ajout de contenu</p>
+        <h2 id="ajout-projet-titre">Ajouter un nouveau projet au portfolio</h2>
+        <p>
+          Cette page vous permet de preparer une nouvelle fiche projet avec un titre, une
+          description, les technologies utilisees et un visuel associe. Le rendu reprend
+          maintenant la meme identite visuelle que le reste du portfolio.
+        </p>
+      </section>
 
-      <!-- Formulaire avec enctype multipart pour l'upload de fichiers -->
       <form action="#" method="post" enctype="multipart/form-data">
-        <!-- <fieldset> et <legend> pour regrouper les champs par catégorie -->
         <fieldset class="groupe-formulaire">
           <legend>Informations principales</legend>
 
           <p>
-            <label for="libelle">Libellé du projet :</label><br />
-            <!-- Attributs : id, name, placeholder, required -->
+            <label for="libelle">Libelle du projet</label>
             <input
               type="text"
               id="libelle"
               name="libelle"
-              placeholder="Ex : Projet sécurité réseau"
+              placeholder="Ex : Deploiement SOC open source"
               required
             />
           </p>
 
           <p>
-            <label for="description">Description :</label><br />
+            <label for="description">Description</label>
             <textarea
               id="description"
               name="description"
-              placeholder="Décrivez votre projet en quelques lignes"
+              placeholder="Decrivez le contexte, l'objectif et le resultat du projet"
               required
             ></textarea>
           </p>
@@ -56,29 +64,28 @@
           <legend>Informations techniques</legend>
 
           <p>
-            <label for="technologies">Technologies :</label><br />
+            <label for="technologies">Technologies</label>
             <input
               type="text"
               id="technologies"
               name="technologies"
-              placeholder="Ex : Wireshark, Linux, Python"
+              placeholder="Ex : Wazuh, Kibana, Suricata, Linux"
               required
             />
           </p>
 
           <p>
-            <label for="image">Image du projet :</label><br />
-            <!-- Sélecteur d'attribut CSS : input[type='file'] (voir style.css) -->
-            <input type="file" id="image" name="image" accept=".png,.jpg,.jpeg" required />
+            <label for="image">Image du projet</label>
+            <input type="file" id="image" name="image" accept=".png,.jpg,.jpeg,.svg" required />
           </p>
         </fieldset>
 
-        <button type="submit" class="btn-submit">Valider</button>
+        <button type="submit" class="btn-submit">Valider le projet</button>
       </form>
     </main>
 
     <footer>
-      <p>&copy; 2026 Papa Alioune Mbaye - Tous droits réservés.</p>
+      <p>(c) 2026 Papa Alioune Mbaye - Tous droits reserves.</p>
     </footer>
   </body>
 </html>
