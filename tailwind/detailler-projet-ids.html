@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projet IDS / IPS | Tailwind</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="min-h-screen bg-[linear-gradient(180deg,_#07111f_0%,_#0a1728_52%,_#07111f_100%)] text-slate-100">
+    <main class="mx-auto w-[min(1120px,calc(100%-2rem))] py-8">
+      <a href="projets.html" class="inline-flex rounded-full border border-white/10 bg-white/5 px-5 py-3 font-semibold text-slate-200 transition hover:bg-white/10">Retour aux projets</a>
+      <section class="mt-6 grid gap-6 overflow-hidden rounded-[32px] border border-white/10 bg-white/5 p-6 shadow-2xl shadow-slate-950/40 backdrop-blur lg:grid-cols-[1.1fr_0.9fr] lg:p-8">
+        <div>
+          <p class="text-sm font-bold uppercase tracking-[0.35em] text-cyan-300">Detection & analyse</p>
+          <h1 class="mt-4 text-4xl font-black leading-tight text-white md:text-5xl">Deploiement IDS / IPS avec Suricata et Snort</h1>
+          <p class="mt-6 text-lg leading-8 text-slate-300">
+            Projet centre sur la surveillance du trafic reseau, la creation de regles de detection
+            et l'analyse des comportements suspects dans un environnement Linux.
+          </p>
+          <p class="mt-4 text-slate-300">
+            L'objectif est de montrer une bonne base de lecture du trafic, de traitement d'alertes
+            et de comprehension des mecanismes de detection d'intrusion.
+          </p>
+          <div class="mt-6 flex flex-wrap gap-2 text-sm">
+            <span class="rounded-full bg-cyan-300/10 px-4 py-2">Suricata</span>
+            <span class="rounded-full bg-cyan-300/10 px-4 py-2">Snort</span>
+            <span class="rounded-full bg-cyan-300/10 px-4 py-2">Wireshark</span>
+            <span class="rounded-full bg-cyan-300/10 px-4 py-2">Linux</span>
+          </div>
+        </div>
+        <img src="../assets/project-ids.png" alt="Projet IDS IPS" class="h-full min-h-[320px] w-full rounded-[28px] border border-white/10 object-cover" />
+      </section>
+    </main>
+  </body>
+</html>

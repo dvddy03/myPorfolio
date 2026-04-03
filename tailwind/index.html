@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Papa Alioune Mbaye | Portfolio Tailwind</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              night: "#07111f",
+              slateblue: "#0f1f35",
+              aqua: "#5eead4",
+              cyanlite: "#67e8f9",
+              ice: "#dbeafe",
+            },
+            boxShadow: {
+              glow: "0 25px 60px rgba(8, 15, 31, 0.45)",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(103,232,249,0.18),_transparent_28%),radial-gradient(circle_at_top_right,_rgba(45,212,191,0.12),_transparent_22%),linear-gradient(180deg,_#07111f_0%,_#0a1728_52%,_#07111f_100%)] text-slate-100">
+    <header class="mx-auto flex w-[min(1180px,calc(100%-2rem))] flex-col gap-5 py-6 lg:flex-row lg:items-center lg:justify-between">
+      <div class="rounded-[28px] border border-white/10 bg-white/5 px-8 py-7 shadow-glow backdrop-blur">
+        <p class="mb-3 text-xs font-bold uppercase tracking-[0.35em] text-cyanlite">Version Tailwind</p>
+        <h1 class="text-4xl font-black tracking-tight md:text-5xl">Papa Alioune Mbaye</h1>
+        <p class="mt-3 max-w-2xl text-base text-slate-300">
+          Administration Systeme, Reseaux, Cloud et Cybersecurite
+        </p>
+      </div>
+
+      <nav class="rounded-full border border-white/10 bg-slate-950/50 p-3 shadow-glow backdrop-blur">
+        <ul class="flex flex-wrap items-center gap-2">
+          <li><a href="index.html" class="inline-flex rounded-full bg-cyan-400/10 px-5 py-3 font-semibold text-white transition hover:bg-cyan-300/20">Accueil</a></li>
+          <li><a href="projets.html" class="inline-flex rounded-full px-5 py-3 font-semibold text-slate-300 transition hover:bg-white/10 hover:text-white">Projets</a></li>
+          <li><a href="ajouter-projet.html" class="inline-flex rounded-full px-5 py-3 font-semibold text-slate-300 transition hover:bg-white/10 hover:text-white">Ajouter un projet</a></li>
+          <li><a href="../index.html" class="inline-flex rounded-full px-5 py-3 font-semibold text-slate-300 transition hover:bg-white/10 hover:text-white">Version CSS</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="mx-auto grid w-[min(1180px,calc(100%-2rem))] gap-8 pb-10">
+      <section class="grid gap-8 overflow-hidden rounded-[34px] border border-white/10 bg-white/5 p-6 shadow-glow backdrop-blur lg:grid-cols-[1.2fr_0.8fr] lg:p-8">
+        <div class="flex flex-col justify-center">
+          <p class="mb-4 text-sm font-bold uppercase tracking-[0.35em] text-aqua">Etudiant en Licence 3 RI</p>
+          <h2 class="max-w-3xl text-4xl font-black leading-tight text-white md:text-6xl">
+            Une deuxieme version du portfolio, plus visuelle et plus moderne avec Tailwind CSS.
+          </h2>
+          <p class="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
+            Cette variante met en valeur mes projets autour de la cyberdefense, du SIEM, de
+            l'administration reseau et de l'IoT. Le but est de proposer une presentation plus nette,
+            plus professionnelle et plus lisible, sans toucher a la premiere version en HTML/CSS.
+          </p>
+
+          <div class="mt-8 flex flex-wrap gap-4">
+            <a href="projets.html" class="inline-flex rounded-full bg-cyan-300 px-6 py-3 font-bold text-slate-950 transition hover:bg-cyan-200">Explorer mes projets</a>
+            <a href="mailto:papalioune03@gmail.com" class="inline-flex rounded-full border border-white/20 bg-white/5 px-6 py-3 font-bold text-white transition hover:bg-white/10">Me contacter</a>
+          </div>
+
+          <div class="mt-8 grid gap-4 sm:grid-cols-3">
+            <div class="rounded-[24px] border border-cyan-300/15 bg-slate-950/40 p-5">
+              <p class="text-3xl font-black text-cyanlite">4</p>
+              <p class="mt-2 text-sm text-slate-300">projets detailles</p>
+            </div>
+            <div class="rounded-[24px] border border-cyan-300/15 bg-slate-950/40 p-5">
+              <p class="text-3xl font-black text-cyanlite">3</p>
+              <p class="mt-2 text-sm text-slate-300">grands domaines techniques</p>
+            </div>
+            <div class="rounded-[24px] border border-cyan-300/15 bg-slate-950/40 p-5">
+              <p class="text-3xl font-black text-cyanlite">1</p>
+              <p class="mt-2 text-sm text-slate-300">profil oriente securite et reseaux</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative">
+          <div class="absolute inset-0 -rotate-3 rounded-[32px] bg-gradient-to-br from-cyan-300/20 via-transparent to-emerald-300/10"></div>
+          <img
+            src="../profil.jpeg"
+            alt="Photo de profil de Papa Alioune Mbaye"
+            class="relative h-full min-h-[420px] w-full rounded-[32px] border border-white/10 object-cover shadow-glow"
+          />
+          <div class="absolute bottom-5 left-5 rounded-full border border-emerald-300/20 bg-slate-950/75 px-5 py-3 text-sm font-semibold text-emerald-300 backdrop-blur">
+            Disponible pour stages et collaborations
+          </div>
+        </div>
+      </section>
+
+      <section class="grid gap-5 md:grid-cols-3">
+        <article class="rounded-[28px] border border-white/10 bg-[#0d1d32] p-6 shadow-glow">
+          <p class="mb-4 text-xs font-bold uppercase tracking-[0.3em] text-aqua">Cyberdefense</p>
+          <h3 class="text-2xl font-bold text-white">Detection, supervision et reponse</h3>
+          <p class="mt-4 text-slate-300">
+            Mise en place d'IDS/IPS, analyse de journaux, correlation d'evenements et lecture plus
+            approfondie des incidents de securite.
+          </p>
+        </article>
+
+        <article class="rounded-[28px] border border-white/10 bg-[#0d1d32] p-6 shadow-glow">
+          <p class="mb-4 text-xs font-bold uppercase tracking-[0.3em] text-aqua">Systeme & reseaux</p>
+          <h3 class="text-2xl font-bold text-white">Services critiques et administration</h3>
+          <p class="mt-4 text-slate-300">
+            Active Directory, DNS, DHCP, SMB, PXE et structuration d'une infrastructure reseau plus
+            claire et plus robuste.
+          </p>
+        </article>
+
+        <article class="rounded-[28px] border border-white/10 bg-[#0d1d32] p-6 shadow-glow">
+          <p class="mb-4 text-xs font-bold uppercase tracking-[0.3em] text-aqua">IoT & cloud</p>
+          <h3 class="text-2xl font-bold text-white">Experimentation terrain</h3>
+          <p class="mt-4 text-slate-300">
+            ESP32, capteurs, scan Wi-Fi, acquisition de donnees et decouverte de logiques cloud et
+            connectivite.
+          </p>
+        </article>
+      </section>
+
+      <section class="rounded-[34px] border border-white/10 bg-white/5 p-6 shadow-glow backdrop-blur lg:p-8">
+        <div class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p class="text-sm font-bold uppercase tracking-[0.35em] text-cyanlite">Selection rapide</p>
+            <h2 class="mt-2 text-3xl font-black text-white md:text-4xl">Trois projets a voir en premier</h2>
+          </div>
+          <a href="projets.html" class="inline-flex rounded-full border border-white/15 px-5 py-3 font-semibold text-slate-200 transition hover:bg-white/10">Voir tous les projets</a>
+        </div>
+
+        <div class="mt-8 grid gap-5 lg:grid-cols-3">
+          <article class="rounded-[28px] border border-white/10 bg-slate-950/45 p-6">
+            <p class="text-xs font-bold uppercase tracking-[0.3em] text-aqua">Detection & analyse</p>
+            <h3 class="mt-3 text-2xl font-bold text-white">Suricata et Snort</h3>
+            <p class="mt-4 text-slate-300">
+              Surveillance du trafic, signatures personnalisees et analyse d'evenements suspects
+              pour renforcer la visibilite reseau.
+            </p>
+            <a href="detailler-projet-ids.html" class="mt-6 inline-flex font-bold text-cyanlite">Explorer ce projet</a>
+          </article>
+
+          <article class="rounded-[28px] border border-white/10 bg-slate-950/45 p-6">
+            <p class="text-xs font-bold uppercase tracking-[0.3em] text-aqua">SOC & SIEM</p>
+            <h3 class="mt-3 text-2xl font-bold text-white">Wazuh, Kibana et Splunk</h3>
+            <p class="mt-4 text-slate-300">
+              Centralisation des journaux, visualisation des alertes et correlation pour mieux
+              comprendre les incidents.
+            </p>
+            <a href="detailler-projet-siem.html" class="mt-6 inline-flex font-bold text-cyanlite">Voir le detail</a>
+          </article>
+
+          <article class="rounded-[28px] border border-white/10 bg-slate-950/45 p-6">
+            <p class="text-xs font-bold uppercase tracking-[0.3em] text-aqua">Systeme & reseau</p>
+            <h3 class="mt-3 text-2xl font-bold text-white">Active Directory & services</h3>
+            <p class="mt-4 text-slate-300">
+              Gestion des comptes, GPO, DNS, DHCP et PXE dans un environnement Windows Server plus
+              complet.
+            </p>
+            <a href="detailler-projet-ad.html" class="mt-6 inline-flex font-bold text-cyanlite">Consulter la fiche</a>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="mx-auto w-[min(1180px,calc(100%-2rem))] pb-8 pt-4 text-center text-sm text-slate-400">
+      <p>(c) 2026 Papa Alioune Mbaye - Portfolio Tailwind</p>
+    </footer>
+  </body>
+</html>

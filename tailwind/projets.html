@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mes projets | Portfolio Tailwind</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(103,232,249,0.18),_transparent_28%),linear-gradient(180deg,_#07111f_0%,_#0a1728_52%,_#07111f_100%)] text-slate-100">
+    <header class="mx-auto flex w-[min(1180px,calc(100%-2rem))] flex-col gap-5 py-6 lg:flex-row lg:items-center lg:justify-between">
+      <div class="rounded-[28px] border border-white/10 bg-white/5 px-8 py-7 shadow-2xl shadow-slate-950/40 backdrop-blur">
+        <p class="mb-3 text-xs font-bold uppercase tracking-[0.35em] text-cyan-300">Portfolio Tailwind</p>
+        <h1 class="text-4xl font-black tracking-tight md:text-5xl">Projets techniques</h1>
+        <p class="mt-3 max-w-2xl text-base text-slate-300">Cybersecurite, reseaux, systeme et IoT</p>
+      </div>
+
+      <nav class="rounded-full border border-white/10 bg-slate-950/50 p-3 shadow-2xl shadow-slate-950/40 backdrop-blur">
+        <ul class="flex flex-wrap items-center gap-2">
+          <li><a href="index.html" class="inline-flex rounded-full px-5 py-3 font-semibold text-slate-300 transition hover:bg-white/10 hover:text-white">Accueil</a></li>
+          <li><a href="projets.html" class="inline-flex rounded-full bg-cyan-400/10 px-5 py-3 font-semibold text-white transition hover:bg-cyan-300/20">Projets</a></li>
+          <li><a href="ajouter-projet.html" class="inline-flex rounded-full px-5 py-3 font-semibold text-slate-300 transition hover:bg-white/10 hover:text-white">Ajouter un projet</a></li>
+          <li><a href="../lister-projets.html" class="inline-flex rounded-full px-5 py-3 font-semibold text-slate-300 transition hover:bg-white/10 hover:text-white">Version CSS</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="mx-auto grid w-[min(1180px,calc(100%-2rem))] gap-8 pb-10">
+      <section class="rounded-[32px] border border-white/10 bg-white/5 p-6 shadow-2xl shadow-slate-950/40 backdrop-blur lg:p-8">
+        <p class="text-sm font-bold uppercase tracking-[0.35em] text-cyan-300">Mes realisations</p>
+        <h2 class="mt-3 text-3xl font-black text-white md:text-4xl">
+          Des projets plus explicites, avec des visuels qui refletent leur contenu
+        </h2>
+        <p class="mt-4 max-w-3xl text-lg leading-8 text-slate-300">
+          Cette deuxieme version du portfolio met en avant le contexte, les outils et le resultat de
+          chaque projet. Les images ne sont plus decoratives : elles aident a comprendre le domaine
+          technique presente.
+        </p>
+      </section>
+
+      <section class="grid gap-6 lg:grid-cols-2">
+        <article class="overflow-hidden rounded-[30px] border border-white/10 bg-slate-950/45 shadow-2xl shadow-slate-950/40">
+          <img src="../assets/project-ids.png" alt="Projet IDS IPS" class="h-64 w-full object-cover" />
+          <div class="p-6">
+            <p class="text-xs font-bold uppercase tracking-[0.3em] text-cyan-300">Detection & analyse</p>
+            <h3 class="mt-3 text-2xl font-black text-white">Deploiement IDS / IPS avec Suricata et Snort</h3>
+            <p class="mt-4 text-slate-300">
+              Surveillance de trafic, creation de regles et analyse d'evenements suspects dans un
+              environnement Linux avec Suricata, Snort et Wireshark.
+            </p>
+            <div class="mt-5 flex flex-wrap gap-2 text-sm">
+              <span class="rounded-full border border-cyan-300/15 bg-cyan-300/10 px-3 py-2">Suricata</span>
+              <span class="rounded-full border border-cyan-300/15 bg-cyan-300/10 px-3 py-2">Snort</span>
+              <span class="rounded-full border border-cyan-300/15 bg-cyan-300/10 px-3 py-2">Wireshark</span>
+              <span class="rounded-full border border-cyan-300/15 bg-cyan-300/10 px-3 py-2">Linux</span>
+            </div>
+            <a href="detailler-projet-ids.html" class="mt-6 inline-flex rounded-full bg-cyan-300 px-5 py-3 font-bold text-slate-950 transition hover:bg-cyan-200">Voir le detail</a>
+          </div>
+        </article>
+
+        <article class="overflow-hidden rounded-[30px] border border-white/10 bg-slate-950/45 shadow-2xl shadow-slate-950/40">
+          <img src="../assets/project-siem.png" alt="Projet SIEM" class="h-64 w-full object-cover" />
+          <div class="p-6">
+            <p class="text-xs font-bold uppercase tracking-[0.3em] text-cyan-300">SOC & SIEM</p>
+            <h3 class="mt-3 text-2xl font-black text-white">Gestion des journaux et analyse des incidents</h3>
+            <p class="mt-4 text-slate-300">
+              Collecte, correlation et visualisation de logs de securite avec Wazuh, Kibana, Splunk
+              et Elasticsearch pour une lecture plus rapide des incidents.
+            </p>
+            <div class="mt-5 flex flex-wrap gap-2 text-sm">
+              <span class="rounded-full border border-cyan-300/15 bg-cyan-300/10 px-3 py-2">Wazuh</span>
+              <span class="rounded-full border border-cyan-300/15 bg-cyan-300/10 px-3 py-2">Kibana</span>
+              <span class="rounded-full border border-cyan-300/15 bg-cyan-300/10 px-3 py-2">Splunk</span>
+              <span class="rounded-full border border-cyan-300/15 bg-cyan-300/10 px-3 py-2">ELK</span>
+            </div>
+            <a href="detailler-projet-siem.html" class="mt-6 inline-flex rounded-full bg-cyan-300 px-5 py-3 font-bold text-slate-950 transition hover:bg-cyan-200">Voir le detail</a>
+          </div>
+        </article>
+
+        <article class="overflow-hidden rounded-[30px] border border-white/10 bg-slate-950/45 shadow-2xl shadow-slate-950/40">
+          <img src="../assets/project-ad.jpeg" alt="Projet Active Directory" class="h-64 w-full object-cover" />
+          <div class="p-6">
+            <p class="text-xs font-bold uppercase tracking-[0.3em] text-cyan-300">Systeme & reseau</p>
+            <h3 class="mt-3 text-2xl font-black text-white">Administration Active Directory et services reseau</h3>
+            <p class="mt-4 text-slate-300">
+              Mise en place d'un domaine Windows Server avec gestion des comptes, GPO, DNS, DHCP,
+              PXE et partage SMB dans une logique d'administration centralisee.
+            </p>
+            <div class="mt-5 flex flex-wrap gap-2 text-sm">
+              <span class="rounded-full border border-cyan-300/15 bg-cyan-300/10 px-3 py-2">AD</span>
+              <span class="rounded-full border border-cyan-300/15 bg-cyan-300/10 px-3 py-2">DNS</span>
+              <span class="rounded-full border border-cyan-300/15 bg-cyan-300/10 px-3 py-2">DHCP</span>
+              <span class="rounded-full border border-cyan-300/15 bg-cyan-300/10 px-3 py-2">PXE</span>
+            </div>
+            <a href="detailler-projet-ad.html" class="mt-6 inline-flex rounded-full bg-cyan-300 px-5 py-3 font-bold text-slate-950 transition hover:bg-cyan-200">Voir le detail</a>
+          </div>
+        </article>
+
+        <article class="overflow-hidden rounded-[30px] border border-white/10 bg-slate-950/45 shadow-2xl shadow-slate-950/40">
+          <img src="../assets/project-iot.svg" alt="Projet IoT" class="h-64 w-full object-cover" />
+          <div class="p-6">
+            <p class="text-xs font-bold uppercase tracking-[0.3em] text-cyan-300">IoT & embarque</p>
+            <h3 class="mt-3 text-2xl font-black text-white">Systemes IoT avec ESP32, capteurs et scan Wi-Fi</h3>
+            <p class="mt-4 text-slate-300">
+              Mini-projets autour de la detection d'obstacles, de la temperature/humidite, du scan
+              des reseaux Wi-Fi et de l'exploitation de capteurs avec ESP32 et Arduino.
+            </p>
+            <div class="mt-5 flex flex-wrap gap-2 text-sm">
+              <span class="rounded-full border border-cyan-300/15 bg-cyan-300/10 px-3 py-2">ESP32</span>
+              <span class="rounded-full border border-cyan-300/15 bg-cyan-300/10 px-3 py-2">Arduino</span>
+              <span class="rounded-full border border-cyan-300/15 bg-cyan-300/10 px-3 py-2">DHT11</span>
+              <span class="rounded-full border border-cyan-300/15 bg-cyan-300/10 px-3 py-2">Wi-Fi</span>
+            </div>
+            <a href="detailler-projet-iot.html" class="mt-6 inline-flex rounded-full bg-cyan-300 px-5 py-3 font-bold text-slate-950 transition hover:bg-cyan-200">Voir le detail</a>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <footer class="mx-auto w-[min(1180px,calc(100%-2rem))] pb-8 pt-4 text-center text-sm text-slate-400">
+      <p>(c) 2026 Papa Alioune Mbaye - Portfolio Tailwind</p>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projet SIEM | Tailwind</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="min-h-screen bg-[linear-gradient(180deg,_#07111f_0%,_#0a1728_52%,_#07111f_100%)] text-slate-100">
+    <main class="mx-auto w-[min(1120px,calc(100%-2rem))] py-8">
+      <a href="projets.html" class="inline-flex rounded-full border border-white/10 bg-white/5 px-5 py-3 font-semibold text-slate-200 transition hover:bg-white/10">Retour aux projets</a>
+      <section class="mt-6 grid gap-6 overflow-hidden rounded-[32px] border border-white/10 bg-white/5 p-6 shadow-2xl shadow-slate-950/40 backdrop-blur lg:grid-cols-[1.1fr_0.9fr] lg:p-8">
+        <div>
+          <p class="text-sm font-bold uppercase tracking-[0.35em] text-cyan-300">SOC & SIEM</p>
+          <h1 class="mt-4 text-4xl font-black leading-tight text-white md:text-5xl">Gestion des journaux et analyse des incidents</h1>
+          <p class="mt-6 text-lg leading-8 text-slate-300">
+            Projet de centralisation de logs et de correlation d'evenements de securite avec Wazuh,
+            Kibana, Splunk et Elasticsearch.
+          </p>
+          <p class="mt-4 text-slate-300">
+            Il met en avant une logique SOC plus claire : collecte, visualisation, analyse et
+            interpretation de signaux de securite.
+          </p>
+          <div class="mt-6 flex flex-wrap gap-2 text-sm">
+            <span class="rounded-full bg-cyan-300/10 px-4 py-2">Wazuh</span>
+            <span class="rounded-full bg-cyan-300/10 px-4 py-2">Kibana</span>
+            <span class="rounded-full bg-cyan-300/10 px-4 py-2">Splunk</span>
+            <span class="rounded-full bg-cyan-300/10 px-4 py-2">Elasticsearch</span>
+          </div>
+        </div>
+        <img src="../assets/project-siem.png" alt="Projet SIEM" class="h-full min-h-[320px] w-full rounded-[28px] border border-white/10 object-cover" />
+      </section>
+    </main>
+  </body>
+</html>
