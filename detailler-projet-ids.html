@@ -3,69 +3,90 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Détail du projet IDS/IPS - Papa Alioune Mbaye</title>
+    <title>Projet IDS / IPS | Papa Alioune Mbaye</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <header id="header-principal">
-      <h1>Papa Alioune Mbaye</h1>
-      <p>Administration Système, Réseaux et Sécurité</p>
+      <div>
+        <p class="eyebrow">Projet securite reseau</p>
+        <h1>Papa Alioune Mbaye</h1>
+        <p>Administration Systeme, Reseaux, Cloud et Cybersecurite</p>
+      </div>
     </header>
 
-    <nav>
+    <nav aria-label="Navigation principale">
       <ul>
-        <li><a href="lister-projets.html">Lister les projets</a></li>
-        <li><a href="lister-projets.html">Accueil</a></li>
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="lister-projets.html">Projets</a></li>
         <li><a href="ajouter-projet.html">Ajouter un projet</a></li>
       </ul>
     </nav>
 
-    <main>
-      <article class="projet-card">
-        <h2>Déploiement IDS/IPS avec Suricata et Snort</h2>
+    <main class="detail-layout">
+      <article class="projet-card detail-hero">
         <img
-          src="https://placehold.co/400x250/1a1a2e/e0e0e0?text=IDS+IPS"
-          alt="Projet IDS/IPS avec Suricata et Snort"
-          width="800"
+          src="assets/project-ids.png"
+          alt="Visuel du projet IDS IPS avec outils de cybersecurite"
         />
+        <div class="detail-content">
+          <p class="eyebrow">Surveillance & detection</p>
+          <h2>Deploiement IDS / IPS avec Suricata et Snort</h2>
+          <p class="detail-copy">
+            Ce projet est centre sur la surveillance du trafic reseau et la detection des activites
+            malveillantes. L'objectif etait de mettre en place un environnement Linux capable
+            d'analyser des flux, de declencher des alertes et d'ameliorer la visibilite sur les
+            comportements suspects.
+          </p>
+          <p class="detail-copy">
+            J'ai travaille sur l'utilisation de Suricata et Snort, l'etude de paquets reseau avec
+            Wireshark et la creation de regles personnalisees pour mieux identifier certaines
+            intrusions ou anomalies.
+          </p>
 
-        <p>
-          Mise en œuvre de Suricata et Snort pour la surveillance du trafic réseau et la détection
-          des menaces. Création de règles personnalisées pour une détection avancée des intrusions.
-        </p>
+          <ul class="tech-list" aria-label="Technologies utilisees">
+            <li>Suricata</li>
+            <li>Snort</li>
+            <li>Linux</li>
+            <li>Wireshark</li>
+            <li>Analyse reseau</li>
+          </ul>
 
-        <!-- Liste imbriquée : <ul> contenant une sous-liste <ol> ordonnée -->
-        <ul>
-          <li>Niveau : Projet personnel orienté surveillance réseau</li>
-          <li>Objectif : Détecter rapidement les intrusions sur un réseau Linux</li>
-          <li>
-            Technologies utilisées :
-            <ol>
-              <li>Suricata</li>
-              <li>Snort</li>
-              <li>Linux</li>
-              <li>Wireshark</li>
-            </ol>
-          </li>
-        </ul>
-
-        <!-- Lien interne avec classe CSS .lien-retour -->
-        <a class="lien-retour" href="lister-projets.html">Retour à la liste</a>
+          <a class="lien-retour" href="lister-projets.html">Retour a la liste des projets</a>
+        </div>
       </article>
 
-      <!-- Section complémentaire avec classe .bloc-informations -->
-      <section aria-labelledby="certifications-titre" class="bloc-informations">
-        <h2 id="certifications-titre">Certifications associées</h2>
-        <ul>
-          <li>CNSP (TheSecOps Group)</li>
-          <li>Cisco Ethical Hacker</li>
-          <li>Python Essentials 1 &amp; 2</li>
-        </ul>
-      </section>
+      <aside class="detail-side">
+        <section class="mini-panel" aria-labelledby="ids-objectif">
+          <h3 id="ids-objectif">Objectif</h3>
+          <p>
+            Mettre en place une chaine de detection capable de surveiller le trafic, d'identifier
+            des signatures suspectes et d'ameliorer la capacite de reaction sur un reseau Linux.
+          </p>
+        </section>
+
+        <section class="mini-panel" aria-labelledby="ids-points">
+          <h3 id="ids-points">Points cles</h3>
+          <ul class="detail-list">
+            <li>Inspection de trafic</li>
+            <li>Regles personnalisees</li>
+            <li>Analyse de paquets</li>
+            <li>Logs d'alertes</li>
+          </ul>
+        </section>
+
+        <section class="mini-panel" aria-labelledby="ids-apport">
+          <h3 id="ids-apport">Ce que ce projet montre</h3>
+          <p>
+            Une capacite a connecter des outils de detection a une demarche d'analyse technique et
+            a comprendre comment la surveillance reseau soutient un SOC ou une equipe securite.
+          </p>
+        </section>
+      </aside>
     </main>
 
     <footer>
-      <p>&copy; 2026 Papa Alioune Mbaye - Tous droits réservés.</p>
+      <p>(c) 2026 Papa Alioune Mbaye - Tous droits reserves.</p>
     </footer>
   </body>
 </html>

@@ -3,68 +3,89 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Détail du projet IoT - Papa Alioune Mbaye</title>
+    <title>Projet IoT | Papa Alioune Mbaye</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <header id="header-principal">
-      <h1>Papa Alioune Mbaye</h1>
-      <p>Administration Système, Réseaux et Sécurité</p>
+      <div>
+        <p class="eyebrow">Projet embarque & connectivite</p>
+        <h1>Papa Alioune Mbaye</h1>
+        <p>Administration Systeme, Reseaux, Cloud et Cybersecurite</p>
+      </div>
     </header>
 
-    <nav>
+    <nav aria-label="Navigation principale">
       <ul>
-        <li><a href="lister-projets.html">Lister les projets</a></li>
-        <li><a href="lister-projets.html">Accueil</a></li>
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="lister-projets.html">Projets</a></li>
         <li><a href="ajouter-projet.html">Ajouter un projet</a></li>
       </ul>
     </nav>
 
-    <main>
-      <article class="projet-card">
-        <h2>Systèmes IoT - Détection d'obstacles et surveillance environnementale</h2>
+    <main class="detail-layout">
+      <article class="projet-card detail-hero">
         <img
-          src="https://placehold.co/400x250/1a1a2e/e0e0e0?text=IoT"
-          alt="Projet IoT de surveillance environnementale"
-          width="800"
+          src="assets/project-iot.svg"
+          alt="Illustration d'un projet IoT avec capteurs et ESP32"
         />
+        <div class="detail-content">
+          <p class="eyebrow">Capteurs, mesures et reseaux sans fil</p>
+          <h2>Systemes IoT avec ESP32, capteurs et scan Wi-Fi</h2>
+          <p class="detail-copy">
+            Cette partie du portfolio regroupe plusieurs mini-projets de pratique embarquee :
+            detection d'obstacles, mesure de temperature et d'humidite, simulation de feu rouge et
+            exploration des reseaux Wi-Fi disponibles avec ESP32.
+          </p>
+          <p class="detail-copy">
+            Les dossiers consultes dans mes travaux montrent notamment des experiences autour de
+            capteurs, de l'affichage de donnees et de la connectivite sans fil, avec une logique
+            d'apprentissage progressive sur Arduino et ESP32.
+          </p>
 
-        <p>
-          Développement de systèmes de détection d'obstacles avec alertes sonores, surveillance
-          environnementale avec capteur DHT11 et transmission de données via le protocole MQTT.
-        </p>
+          <ul class="tech-list" aria-label="Technologies utilisees">
+            <li>ESP32</li>
+            <li>Arduino</li>
+            <li>DHT11</li>
+            <li>Wi-Fi Scan</li>
+            <li>C / C++ embarque</li>
+          </ul>
 
-        <!-- Liste imbriquée : <ul> contenant une sous-liste <ol> ordonnée -->
-        <ul>
-          <li>Niveau : Projet personnel orienté IoT</li>
-          <li>Objectif : Surveiller un environnement avec des capteurs connectés</li>
-          <li>
-            Technologies utilisées :
-            <ol>
-              <li>Arduino</li>
-              <li>DHT11</li>
-              <li>MQTT</li>
-              <li>C++</li>
-            </ol>
-          </li>
-        </ul>
-
-        <!-- Lien interne avec classe CSS .lien-retour -->
-        <a class="lien-retour" href="lister-projets.html">Retour à la liste</a>
+          <a class="lien-retour" href="lister-projets.html">Retour a la liste des projets</a>
+        </div>
       </article>
 
-      <!-- Section complémentaire avec classe .bloc-informations -->
-      <section aria-labelledby="certifications-titre" class="bloc-informations">
-        <h2 id="certifications-titre">Certifications associées</h2>
-        <ul>
-          <li>Programmation embarquée (projets pratiques)</li>
-          <li>Initiation aux protocoles IoT</li>
-        </ul>
-      </section>
+      <aside class="detail-side">
+        <section class="mini-panel" aria-labelledby="iot-objectif">
+          <h3 id="iot-objectif">Objectif</h3>
+          <p>
+            Comprendre comment exploiter des capteurs, lire des donnees physiques et les relier a
+            des usages concrets de supervision ou de connectivite embarquee.
+          </p>
+        </section>
+
+        <section class="mini-panel" aria-labelledby="iot-points">
+          <h3 id="iot-points">Points cles</h3>
+          <ul class="detail-list">
+            <li>Detection d'obstacles</li>
+            <li>Temperature / humidite</li>
+            <li>Scan de reseaux Wi-Fi</li>
+            <li>Programmation ESP32</li>
+          </ul>
+        </section>
+
+        <section class="mini-panel" aria-labelledby="iot-apport">
+          <h3 id="iot-apport">Ce que ce projet montre</h3>
+          <p>
+            Une curiosite technique au-dela de la securite pure, avec une capacite a prototyper des
+            systemes connectes et a comprendre le lien entre capteurs, donnees et reseaux.
+          </p>
+        </section>
+      </aside>
     </main>
 
     <footer>
-      <p>&copy; 2026 Papa Alioune Mbaye - Tous droits réservés.</p>
+      <p>(c) 2026 Papa Alioune Mbaye - Tous droits reserves.</p>
     </footer>
   </body>
 </html>

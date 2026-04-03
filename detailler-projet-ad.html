@@ -3,71 +3,90 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Détail du projet Active Directory - Papa Alioune Mbaye</title>
+    <title>Projet Active Directory | Papa Alioune Mbaye</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <header id="header-principal">
-      <h1>Papa Alioune Mbaye</h1>
-      <p>Administration Système, Réseaux et Sécurité</p>
+      <div>
+        <p class="eyebrow">Projet systeme & reseaux</p>
+        <h1>Papa Alioune Mbaye</h1>
+        <p>Administration Systeme, Reseaux, Cloud et Cybersecurite</p>
+      </div>
     </header>
 
-    <nav>
+    <nav aria-label="Navigation principale">
       <ul>
-        <li><a href="lister-projets.html">Lister les projets</a></li>
-        <li><a href="lister-projets.html">Accueil</a></li>
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="lister-projets.html">Projets</a></li>
         <li><a href="ajouter-projet.html">Ajouter un projet</a></li>
       </ul>
     </nav>
 
-    <main>
-      <article class="projet-card">
-        <h2>Administration Active Directory et Infrastructure Réseau</h2>
+    <main class="detail-layout">
+      <article class="projet-card detail-hero">
         <img
-          src="https://placehold.co/400x250/1a1a2e/e0e0e0?text=Active+Directory"
-          alt="Projet Active Directory et infrastructure réseau"
-          width="800"
+          src="assets/project-ad.jpeg"
+          alt="Topologie reseau pour un projet Active Directory"
         />
+        <div class="detail-content">
+          <p class="eyebrow">Windows Server & services reseau</p>
+          <h2>Administration Active Directory et infrastructure reseau</h2>
+          <p class="detail-copy">
+            Ce projet met en avant la mise en place d'un domaine Windows Server complet avec Active
+            Directory, gestion des utilisateurs, politiques de groupe et services reseau essentiels.
+          </p>
+          <p class="detail-copy">
+            J'ai egalement travaille sur DHCP, DNS, SMB et PXE afin de mieux comprendre la logique
+            d'administration centralisee, la distribution d'adresses, la resolution de noms et le
+            deploiement de postes en environnement reseau.
+          </p>
 
-        <p>
-          Configuration d'un domaine AD, gestion des utilisateurs et des stratégies de groupe,
-          déploiement de Windows PXE pour le démarrage réseau. Configuration DHCP, DNS et partage
-          de fichiers sécurisé via SMB.
-        </p>
+          <ul class="tech-list" aria-label="Technologies utilisees">
+            <li>Windows Server</li>
+            <li>Active Directory</li>
+            <li>DNS</li>
+            <li>DHCP</li>
+            <li>PXE</li>
+            <li>SMB</li>
+          </ul>
 
-        <!-- Liste imbriquée : <ul> contenant une sous-liste <ol> ordonnée -->
-        <ul>
-          <li>Niveau : Projet personnel orienté administration système</li>
-          <li>Objectif : Gérer un domaine Windows complet</li>
-          <li>
-            Technologies utilisées :
-            <ol>
-              <li>Windows Server</li>
-              <li>Active Directory</li>
-              <li>DHCP</li>
-              <li>DNS</li>
-              <li>SMB</li>
-              <li>PXE</li>
-            </ol>
-          </li>
-        </ul>
-
-        <!-- Lien interne avec classe CSS .lien-retour -->
-        <a class="lien-retour" href="lister-projets.html">Retour à la liste</a>
+          <a class="lien-retour" href="lister-projets.html">Retour a la liste des projets</a>
+        </div>
       </article>
 
-      <!-- Section complémentaire avec classe .bloc-informations -->
-      <section aria-labelledby="certifications-titre" class="bloc-informations">
-        <h2 id="certifications-titre">Certifications associées</h2>
-        <ul>
-          <li>Cisco Ethical Hacker</li>
-          <li>Administration Windows Server (pratique)</li>
-        </ul>
-      </section>
+      <aside class="detail-side">
+        <section class="mini-panel" aria-labelledby="ad-objectif">
+          <h3 id="ad-objectif">Objectif</h3>
+          <p>
+            Concevoir un environnement Windows structure avec authentification centralisee,
+            attribution des ressources et administration de services reseau dans une meme
+            architecture.
+          </p>
+        </section>
+
+        <section class="mini-panel" aria-labelledby="ad-points">
+          <h3 id="ad-points">Points cles</h3>
+          <ul class="detail-list">
+            <li>Domaine AD</li>
+            <li>Gestion des comptes</li>
+            <li>GPO</li>
+            <li>Services reseau</li>
+          </ul>
+        </section>
+
+        <section class="mini-panel" aria-labelledby="ad-apport">
+          <h3 id="ad-apport">Ce que ce projet montre</h3>
+          <p>
+            Une capacite a organiser une infrastructure interne de facon plus professionnelle, avec
+            une bonne base en systeme Windows, en administration reseau et en logique de service.
+          </p>
+        </section>
+      </aside>
     </main>
 
     <footer>
-      <p>&copy; 2026 Papa Alioune Mbaye - Tous droits réservés.</p>
+      <p>(c) 2026 Papa Alioune Mbaye - Tous droits reserves.</p>
     </footer>
   </body>
 </html>
