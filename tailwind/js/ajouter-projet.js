@@ -95,8 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    submitButton.disabled = true;
-    submitButton.textContent = "Envoi en cours...";
+    setSubmittingState(submitButton, resetButton, true);
 
     const formData = new FormData(form);
     const payload = {
@@ -109,8 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (hasDuplicateTitle(payload.libelle)) {
       showMessage(messageBox, "Un projet avec ce libelle existe deja.", "error");
-      submitButton.disabled = false;
-      submitButton.textContent = "Valider le projet";
+      setSubmittingState(submitButton, resetButton, false);
       libelleInput.focus();
       return;
     }
@@ -129,8 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (error) {
       showMessage(messageBox, "Echec de l'envoi. Reessayez.", "error");
     } finally {
-      submitButton.disabled = false;
-      submitButton.textContent = "Valider le projet";
+      setSubmittingState(submitButton, resetButton, false);
     }
   });
 
@@ -251,4 +248,10 @@ function clearMessage(container) {
 
 function updateCharCount(input, counter, max) {
   counter.textContent = `${input.value.length}/${max} caracteres`;
+}
+
+function setSubmittingState(submitButton, resetButton, isSubmitting) {
+  submitButton.disabled = isSubmitting;
+  resetButton.disabled = isSubmitting;
+  submitButton.textContent = isSubmitting ? "Envoi en cours..." : "Valider le projet";
 }
