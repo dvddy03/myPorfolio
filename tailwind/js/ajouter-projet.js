@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("project-form");
+  const libelleInput = document.getElementById("libelle");
+  const descriptionInput = document.getElementById("description");
   const submitButton = document.getElementById("submit-button");
   const resetButton = document.getElementById("reset-button");
   const messageBox = document.getElementById("form-message");
@@ -10,6 +12,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const imagePreview = document.getElementById("image-preview");
   const imagePreviewCaption = document.getElementById("image-preview-caption");
   const jsonOutput = document.getElementById("json-output");
+  const libelleCount = document.getElementById("libelle-count");
+  const descriptionCount = document.getElementById("description-count");
 
   const savedProjects = readSavedProjects();
   if (savedProjects.length > 0) {
@@ -20,6 +24,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   technologiesInput.addEventListener("input", () => {
     renderTechnologyPreview(parseTechnologies(technologiesInput.value), techPreview);
+  });
+  libelleInput.addEventListener("input", () => {
+    updateCharCount(libelleInput, libelleCount, 90);
+  });
+  descriptionInput.addEventListener("input", () => {
+    updateCharCount(descriptionInput, descriptionCount, 1200);
   });
 
   imageInput.addEventListener("change", () => {
@@ -32,6 +42,8 @@ document.addEventListener("DOMContentLoaded", () => {
     imagePreviewWrapper.classList.add("hidden");
     imagePreview.src = "";
     imagePreviewCaption.textContent = "";
+    updateCharCount(libelleInput, libelleCount, 90);
+    updateCharCount(descriptionInput, descriptionCount, 1200);
   });
 
   form.addEventListener("submit", async (event) => {
@@ -81,6 +93,9 @@ document.addEventListener("DOMContentLoaded", () => {
       submitButton.textContent = "Valider le projet";
     }
   });
+
+  updateCharCount(libelleInput, libelleCount, 90);
+  updateCharCount(descriptionInput, descriptionCount, 1200);
 });
 
 function parseTechnologies(rawValue) {
@@ -168,4 +183,8 @@ function showMessage(container, text, type) {
 function clearMessage(container) {
   container.textContent = "";
   container.className = "hidden rounded-2xl border px-4 py-3 text-sm font-semibold";
+}
+
+function updateCharCount(input, counter, max) {
+  counter.textContent = `${input.value.length}/${max} caracteres`;
 }

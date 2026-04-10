@@ -22,11 +22,13 @@
           <div class="grid gap-6 rounded-[28px] border border-white/10 bg-slate-950/35 p-6">
             <div>
               <label for="libelle" class="mb-2 block font-semibold text-white">Libelle du projet</label>
-              <input id="libelle" name="libelle" type="text" required minlength="4" placeholder="Ex : Deploiement SOC open source" class="w-full rounded-2xl border border-white/10 bg-slate-950/60 px-5 py-4 text-white outline-none ring-0 placeholder:text-slate-500 focus:border-cyan-300" />
+              <input id="libelle" name="libelle" type="text" required minlength="4" maxlength="90" placeholder="Ex : Deploiement SOC open source" class="w-full rounded-2xl border border-white/10 bg-slate-950/60 px-5 py-4 text-white outline-none ring-0 placeholder:text-slate-500 focus:border-cyan-300" />
+              <p id="libelle-count" class="mt-2 text-xs text-slate-400">0/90 caracteres</p>
             </div>
             <div>
               <label for="description" class="mb-2 block font-semibold text-white">Description</label>
-              <textarea id="description" name="description" rows="6" required minlength="20" placeholder="Decrivez le contexte, l'objectif et le resultat du projet" class="w-full rounded-2xl border border-white/10 bg-slate-950/60 px-5 py-4 text-white outline-none ring-0 placeholder:text-slate-500 focus:border-cyan-300"></textarea>
+              <textarea id="description" name="description" rows="6" required minlength="20" maxlength="1200" placeholder="Decrivez le contexte, l'objectif et le resultat du projet" class="w-full rounded-2xl border border-white/10 bg-slate-950/60 px-5 py-4 text-white outline-none ring-0 placeholder:text-slate-500 focus:border-cyan-300"></textarea>
+              <p id="description-count" class="mt-2 text-xs text-slate-400">0/1200 caracteres</p>
             </div>
             <div>
               <label for="technologies" class="mb-2 block font-semibold text-white">Technologies</label>
