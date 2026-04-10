@@ -48,6 +48,13 @@ document.addEventListener("DOMContentLoaded", () => {
     updateImagePreview(imageInput, imagePreviewWrapper, imagePreview, imagePreviewCaption);
   });
 
+  descriptionInput.addEventListener("keydown", (event) => {
+    if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
+      event.preventDefault();
+      form.requestSubmit();
+    }
+  });
+
   resetButton.addEventListener("click", () => {
     clearMessage(messageBox);
     techPreview.innerHTML = "";
