@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const maxImageSizeBytes = 4 * 1024 * 1024;
+  const allowedImageTypes = ["image/png", "image/jpeg", "image/svg+xml"];
   const form = document.getElementById("project-form");
   const libelleInput = document.getElementById("libelle");
   const descriptionInput = document.getElementById("description");
@@ -33,6 +35,15 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   imageInput.addEventListener("change", () => {
+    const imageCheck = validateImageFile(imageInput.files[0], allowedImageTypes, maxImageSizeBytes);
+    if (!imageCheck.valid) {
+      showMessage(messageBox, imageCheck.message, "error");
+      imageInput.value = "";
+      updateImagePreview(imageInput, imagePreviewWrapper, imagePreview, imagePreviewCaption);
+      return;
+    }
+
+    clearMessage(messageBox);
     updateImagePreview(imageInput, imagePreviewWrapper, imagePreview, imagePreviewCaption);
   });
 
@@ -60,6 +71,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (technologies.length === 0) {
       showMessage(messageBox, "Ajoutez au moins une technologie.", "error");
       technologiesInput.focus();
+      return;
+    }
+
+    const imageCheck = validateImageFile(imageInput.files[0], allowedImageTypes, maxImageSizeBytes);
+    if (!imageCheck.valid) {
+      showMessage(messageBox, imageCheck.message, "error");
+      imageInput.focus();
       return;
     }
 
@@ -138,6 +156,22 @@ function updateImagePreview(input, wrapper, image, caption) {
   caption.textContent = `${file.name} - ${Math.ceil(file.size / 1024)} Ko`;
   wrapper.classList.remove("hidden");
   image.onload = () => URL.revokeObjectURL(objectUrl);
+}
+
+function validateImageFile(file, allowedTypes, maxSizeBytes) {
+  if (!file) {
+    return { valid: false, message: "Ajoutez une image pour ce projet." };
+  }
+
+  if (!allowedTypes.includes(file.type)) {
+    return { valid: false, message: "Format invalide. Utilisez PNG, JPG ou SVG." };
+  }
+
+  if (file.size > maxSizeBytes) {
+    return { valid: false, message: "Image trop lourde. Taille maximale: 4 Mo." };
+  }
+
+  return { valid: true, message: "" };
 }
 
 function fakeApiSubmit(payload) {
