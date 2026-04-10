@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("project-form");
   const submitButton = document.getElementById("submit-button");
+  const resetButton = document.getElementById("reset-button");
   const messageBox = document.getElementById("form-message");
   const technologiesInput = document.getElementById("technologies");
   const techPreview = document.getElementById("tech-preview");
@@ -23,6 +24,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   imageInput.addEventListener("change", () => {
     updateImagePreview(imageInput, imagePreviewWrapper, imagePreview, imagePreviewCaption);
+  });
+
+  resetButton.addEventListener("click", () => {
+    clearMessage(messageBox);
+    techPreview.innerHTML = "";
+    imagePreviewWrapper.classList.add("hidden");
+    imagePreview.src = "";
+    imagePreviewCaption.textContent = "";
   });
 
   form.addEventListener("submit", async (event) => {
