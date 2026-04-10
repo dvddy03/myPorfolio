@@ -93,6 +93,14 @@ document.addEventListener("DOMContentLoaded", () => {
       dateSoumission: new Date().toISOString(),
     };
 
+    if (hasDuplicateTitle(payload.libelle)) {
+      showMessage(messageBox, "Un projet avec ce libelle existe deja.", "error");
+      submitButton.disabled = false;
+      submitButton.textContent = "Valider le projet";
+      libelleInput.focus();
+      return;
+    }
+
     try {
       await fakeApiSubmit(payload);
       saveProject(payload);
@@ -200,6 +208,14 @@ function saveProject(project) {
   const projects = readSavedProjects();
   projects.push(project);
   localStorage.setItem("portfolio_projects", JSON.stringify(projects));
+}
+
+function hasDuplicateTitle(title) {
+  const normalizedTitle = title.trim().toLowerCase();
+  return readSavedProjects().some((project) => {
+    const existingTitle = String(project.libelle || "").trim().toLowerCase();
+    return existingTitle === normalizedTitle;
+  });
 }
 
 function showMessage(container, text, type) {
