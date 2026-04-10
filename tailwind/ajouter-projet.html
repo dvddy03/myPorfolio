@@ -58,7 +58,12 @@
           </div>
 
           <section class="rounded-[28px] border border-white/10 bg-slate-950/35 p-6">
-            <h2 class="text-xl font-bold text-white">Dernier envoi (JSON)</h2>
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <h2 class="text-xl font-bold text-white">Dernier envoi (JSON)</h2>
+              <button id="clear-storage-button" type="button" class="inline-flex rounded-full border border-white/20 bg-white/5 px-4 py-2 text-xs font-bold uppercase tracking-wide text-slate-200 transition hover:bg-white/10">
+                Vider l'historique local
+              </button>
+            </div>
             <pre id="json-output" class="mt-4 overflow-x-auto rounded-2xl border border-white/10 bg-slate-950/60 p-4 text-sm text-slate-300"></pre>
           </section>
         </form>

@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const imagePreview = document.getElementById("image-preview");
   const imagePreviewCaption = document.getElementById("image-preview-caption");
   const jsonOutput = document.getElementById("json-output");
+  const clearStorageButton = document.getElementById("clear-storage-button");
   const libelleCount = document.getElementById("libelle-count");
   const descriptionCount = document.getElementById("description-count");
 
@@ -55,6 +56,12 @@ document.addEventListener("DOMContentLoaded", () => {
     imagePreviewCaption.textContent = "";
     updateCharCount(libelleInput, libelleCount, 90);
     updateCharCount(descriptionInput, descriptionCount, 1200);
+  });
+
+  clearStorageButton.addEventListener("click", () => {
+    localStorage.removeItem("portfolio_projects");
+    jsonOutput.textContent = "Aucun envoi pour le moment.";
+    showMessage(messageBox, "Historique local supprime.", "success");
   });
 
   form.addEventListener("submit", async (event) => {
