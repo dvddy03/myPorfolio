@@ -67,7 +67,7 @@ function bindEvents(refs) {
     showMessage(refs.messageBox, "Historique local supprime.", "success");
   });
 
-  refs.form.addEventListener("submit", (event) => {
+  refs.form.addEventListener("submit", async (event) => {
     event.preventDefault();
     clearMessage(refs.messageBox);
 
@@ -76,14 +76,24 @@ function bindEvents(refs) {
       return;
     }
 
-    const payload = buildPayload(refs);
+    setSubmittingState(refs, true);
+
+    let payload;
+    try {
+      payload = await buildPayload(refs);
+    } catch (error) {
+      setSubmittingState(refs, false);
+      showMessage(refs.messageBox, "Impossible de traiter l'image selectionnee.", "error");
+      return;
+    }
+
     const businessValidation = validatePayload(payload);
     if (!businessValidation.valid) {
+      setSubmittingState(refs, false);
       showMessage(refs.messageBox, businessValidation.message, "error");
       return;
     }
 
-    setSubmittingState(refs, true);
     saveProject(payload);
     refs.jsonOutput.textContent = JSON.stringify(payload, null, 2);
     showMessage(refs.messageBox, "Projet enregistre avec succes.", "success");
@@ -109,13 +119,16 @@ function renderInitialState(refs) {
   updateCounter(refs.description, refs.descriptionCount, 1200);
 }
 
-function buildPayload(refs) {
+async function buildPayload(refs) {
   const formData = new FormData(refs.form);
+  const selectedImage = refs.image.files[0] || null;
+  const imageDataUrl = selectedImage ? await readFileAsDataUrl(selectedImage) : "";
   return {
     libelle: String(formData.get("libelle") || "").trim(),
     description: String(formData.get("description") || "").trim(),
     technologies: parseTechnologies(String(formData.get("technologies") || "")),
-    image: refs.image.files[0]?.name || "",
+    image: selectedImage?.name || "",
+    imageDataUrl,
     dateSoumission: new Date().toISOString(),
   };
 }
@@ -212,6 +225,15 @@ function saveProject(payload) {
   const projects = readProjects();
   projects.push(payload);
   localStorage.setItem(STORAGE_KEY, JSON.stringify(projects));
+}
+
+function readFileAsDataUrl(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result || ""));
+    reader.onerror = () => reject(new Error("Impossible de lire le fichier image."));
+    reader.readAsDataURL(file);
+  });
 }
 
 function updateCounter(input, counter, max) {
