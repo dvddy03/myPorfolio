@@ -3,28 +3,23 @@ const FALLBACK_IMAGE =
   "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%201200%20700%27%3E%3Crect%20width%3D%271200%27%20height%3D%27700%27%20fill%3D%27%230f172a%27/%3E%3Ctext%20x%3D%27600%27%20y%3D%27350%27%20font-size%3D%2758%27%20text-anchor%3D%27middle%27%20fill%3D%27%23cbd5e1%27%20font-family%3D%27Arial%2Csans-serif%27%3EProjet%20Ajoute%3C/text%3E%3C/svg%3E";
 
 document.addEventListener("DOMContentLoaded", () => {
-  const section = document.getElementById("user-projects-section");
-  const grid = document.getElementById("user-projects-grid");
-  if (!section || !grid) {
+  const grid = document.getElementById("projects-grid");
+  if (!grid) {
     return;
   }
 
   const projects = readProjects();
-  if (projects.length === 0) {
-    return;
-  }
-
   const sortedProjects = [...projects].sort((a, b) => {
     const aDate = Date.parse(String(a.dateSoumission || ""));
     const bDate = Date.parse(String(b.dateSoumission || ""));
     return bDate - aDate;
   });
 
-  grid.innerHTML = "";
+  const fragment = document.createDocumentFragment();
   sortedProjects.forEach((project) => {
-    grid.appendChild(buildProjectCard(project));
+    fragment.appendChild(buildProjectCard(project));
   });
-  section.classList.remove("hidden");
+  grid.prepend(fragment);
 });
 
 function readProjects() {
@@ -56,7 +51,7 @@ function buildProjectCard(project) {
 
   const label = document.createElement("p");
   label.className = "text-xs font-bold uppercase tracking-[0.3em] text-cyan-300";
-  label.textContent = "Projet ajoute";
+  label.textContent = String(project.categorie || "Projet ajoute");
   body.appendChild(label);
 
   const title = document.createElement("h3");
@@ -80,12 +75,12 @@ function buildProjectCard(project) {
   });
   body.appendChild(tags);
 
-  if (project.dateSoumission) {
-    const date = document.createElement("p");
-    date.className = "mt-5 text-xs text-slate-400";
-    date.textContent = `Ajoute le ${formatDate(project.dateSoumission)}`;
-    body.appendChild(date);
-  }
+  const detailLink = document.createElement("a");
+  detailLink.className =
+    "mt-6 inline-flex rounded-full bg-cyan-300 px-5 py-3 font-bold text-slate-950 transition hover:bg-cyan-200";
+  detailLink.textContent = "Voir le detail";
+  detailLink.href = normalizeDetailUrl(String(project.detailUrl || ""));
+  body.appendChild(detailLink);
 
   article.appendChild(body);
   return article;
@@ -98,14 +93,10 @@ function truncateText(text, maxLength) {
   return `${text.slice(0, maxLength - 1)}...`;
 }
 
-function formatDate(isoDateString) {
-  const date = new Date(isoDateString);
-  if (Number.isNaN(date.getTime())) {
-    return "date inconnue";
+function normalizeDetailUrl(rawUrl) {
+  const url = rawUrl.trim();
+  if (!url) {
+    return "ajouter-projet.html";
   }
-  return date.toLocaleDateString("fr-FR", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+  return url;
 }

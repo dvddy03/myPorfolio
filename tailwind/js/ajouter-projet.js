@@ -14,6 +14,8 @@ function getRefs() {
     libelle: document.getElementById("libelle"),
     description: document.getElementById("description"),
     technologies: document.getElementById("technologies"),
+    categorie: document.getElementById("categorie"),
+    detailUrl: document.getElementById("detailUrl"),
     image: document.getElementById("image"),
     submitButton: document.getElementById("submit-button"),
     resetButton: document.getElementById("reset-button"),
@@ -127,6 +129,8 @@ async function buildPayload(refs) {
     libelle: String(formData.get("libelle") || "").trim(),
     description: String(formData.get("description") || "").trim(),
     technologies: parseTechnologies(String(formData.get("technologies") || "")),
+    categorie: String(formData.get("categorie") || "").trim(),
+    detailUrl: String(formData.get("detailUrl") || "").trim(),
     image: selectedImage?.name || "",
     imageDataUrl,
     dateSoumission: new Date().toISOString(),
@@ -154,6 +158,10 @@ function parseTechnologies(rawValue) {
 function validatePayload(payload) {
   if (payload.technologies.length === 0) {
     return { valid: false, message: "Ajoutez au moins une technologie." };
+  }
+
+  if (!payload.categorie) {
+    return { valid: false, message: "Selectionnez une categorie." };
   }
 
   if (!payload.image) {
