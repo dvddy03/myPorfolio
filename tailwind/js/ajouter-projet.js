@@ -1,145 +1,176 @@
+const STORAGE_KEY = "portfolio_projects";
+const MAX_IMAGE_SIZE_BYTES = 4 * 1024 * 1024;
+const ALLOWED_IMAGE_TYPES = new Set(["image/png", "image/jpeg", "image/svg+xml"]);
+
 document.addEventListener("DOMContentLoaded", () => {
-  const maxImageSizeBytes = 4 * 1024 * 1024;
-  const allowedImageTypes = ["image/png", "image/jpeg", "image/svg+xml"];
-  const form = document.getElementById("project-form");
-  const libelleInput = document.getElementById("libelle");
-  const descriptionInput = document.getElementById("description");
-  const submitButton = document.getElementById("submit-button");
-  const resetButton = document.getElementById("reset-button");
-  const messageBox = document.getElementById("form-message");
-  const technologiesInput = document.getElementById("technologies");
-  const techPreview = document.getElementById("tech-preview");
-  const imageInput = document.getElementById("image");
-  const imagePreviewWrapper = document.getElementById("image-preview-wrapper");
-  const imagePreview = document.getElementById("image-preview");
-  const imagePreviewCaption = document.getElementById("image-preview-caption");
-  const jsonOutput = document.getElementById("json-output");
-  const clearStorageButton = document.getElementById("clear-storage-button");
-  const libelleCount = document.getElementById("libelle-count");
-  const descriptionCount = document.getElementById("description-count");
-
-  const savedProjects = readSavedProjects();
-  if (savedProjects.length > 0) {
-    jsonOutput.textContent = JSON.stringify(savedProjects[savedProjects.length - 1], null, 2);
-  } else {
-    jsonOutput.textContent = "Aucun envoi pour le moment.";
-  }
-
-  technologiesInput.addEventListener("input", () => {
-    renderTechnologyPreview(parseTechnologies(technologiesInput.value), techPreview);
-  });
-  libelleInput.addEventListener("input", () => {
-    updateCharCount(libelleInput, libelleCount, 90);
-  });
-  descriptionInput.addEventListener("input", () => {
-    updateCharCount(descriptionInput, descriptionCount, 1200);
-  });
-
-  imageInput.addEventListener("change", () => {
-    const imageCheck = validateImageFile(imageInput.files[0], allowedImageTypes, maxImageSizeBytes);
-    if (!imageCheck.valid) {
-      showMessage(messageBox, imageCheck.message, "error");
-      imageInput.value = "";
-      updateImagePreview(imageInput, imagePreviewWrapper, imagePreview, imagePreviewCaption);
-      return;
-    }
-
-    clearMessage(messageBox);
-    updateImagePreview(imageInput, imagePreviewWrapper, imagePreview, imagePreviewCaption);
-  });
-
-  descriptionInput.addEventListener("keydown", (event) => {
-    if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
-      event.preventDefault();
-      form.requestSubmit();
-    }
-  });
-
-  resetButton.addEventListener("click", () => {
-    clearMessage(messageBox);
-    techPreview.innerHTML = "";
-    imagePreviewWrapper.classList.add("hidden");
-    imagePreview.src = "";
-    imagePreviewCaption.textContent = "";
-    updateCharCount(libelleInput, libelleCount, 90);
-    updateCharCount(descriptionInput, descriptionCount, 1200);
-  });
-
-  clearStorageButton.addEventListener("click", () => {
-    localStorage.removeItem("portfolio_projects");
-    jsonOutput.textContent = "Aucun envoi pour le moment.";
-    showMessage(messageBox, "Historique local supprime.", "success");
-  });
-
-  form.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    clearMessage(messageBox);
-
-    if (!form.checkValidity()) {
-      form.reportValidity();
-      showMessage(messageBox, "Merci de corriger les champs obligatoires.", "error");
-      return;
-    }
-
-    const technologies = parseTechnologies(technologiesInput.value);
-    if (technologies.length === 0) {
-      showMessage(messageBox, "Ajoutez au moins une technologie.", "error");
-      technologiesInput.focus();
-      return;
-    }
-
-    const imageCheck = validateImageFile(imageInput.files[0], allowedImageTypes, maxImageSizeBytes);
-    if (!imageCheck.valid) {
-      showMessage(messageBox, imageCheck.message, "error");
-      imageInput.focus();
-      return;
-    }
-
-    setSubmittingState(submitButton, resetButton, true);
-
-    const formData = new FormData(form);
-    const payload = {
-      libelle: String(formData.get("libelle") || "").trim(),
-      description: String(formData.get("description") || "").trim(),
-      technologies,
-      image: imageInput.files[0]?.name || null,
-      dateSoumission: new Date().toISOString(),
-    };
-
-    if (hasDuplicateTitle(payload.libelle)) {
-      showMessage(messageBox, "Un projet avec ce libelle existe deja.", "error");
-      setSubmittingState(submitButton, resetButton, false);
-      libelleInput.focus();
-      return;
-    }
-
-    try {
-      await fakeApiSubmit(payload);
-      saveProject(payload);
-      jsonOutput.textContent = JSON.stringify(payload, null, 2);
-      showMessage(messageBox, "Projet valide et enregistre localement.", "success");
-
-      form.reset();
-      techPreview.innerHTML = "";
-      imagePreviewWrapper.classList.add("hidden");
-      imagePreview.src = "";
-      imagePreviewCaption.textContent = "";
-    } catch (error) {
-      showMessage(messageBox, "Echec de l'envoi. Reessayez.", "error");
-    } finally {
-      setSubmittingState(submitButton, resetButton, false);
-    }
-  });
-
-  updateCharCount(libelleInput, libelleCount, 90);
-  updateCharCount(descriptionInput, descriptionCount, 1200);
+  const refs = getRefs();
+  bindEvents(refs);
+  renderInitialState(refs);
 });
 
+function getRefs() {
+  return {
+    form: document.getElementById("project-form"),
+    libelle: document.getElementById("libelle"),
+    description: document.getElementById("description"),
+    technologies: document.getElementById("technologies"),
+    image: document.getElementById("image"),
+    submitButton: document.getElementById("submit-button"),
+    resetButton: document.getElementById("reset-button"),
+    clearStorageButton: document.getElementById("clear-storage-button"),
+    messageBox: document.getElementById("form-message"),
+    techPreview: document.getElementById("tech-preview"),
+    imagePreviewWrapper: document.getElementById("image-preview-wrapper"),
+    imagePreview: document.getElementById("image-preview"),
+    imagePreviewCaption: document.getElementById("image-preview-caption"),
+    jsonOutput: document.getElementById("json-output"),
+    libelleCount: document.getElementById("libelle-count"),
+    descriptionCount: document.getElementById("description-count"),
+  };
+}
+
+function bindEvents(refs) {
+  refs.libelle.addEventListener("input", () => updateCounter(refs.libelle, refs.libelleCount, 90));
+  refs.description.addEventListener("input", () =>
+    updateCounter(refs.description, refs.descriptionCount, 1200),
+  );
+
+  refs.technologies.addEventListener("input", () => {
+    const techList = parseTechnologies(refs.technologies.value);
+    renderTechnologyPreview(techList, refs.techPreview);
+  });
+
+  refs.image.addEventListener("change", () => {
+    const imageValidation = validateImage(refs.image.files[0]);
+    if (!imageValidation.valid) {
+      refs.image.value = "";
+      clearImagePreview(refs);
+      showMessage(refs.messageBox, imageValidation.message, "error");
+      return;
+    }
+
+    clearMessage(refs.messageBox);
+    renderImagePreview(refs.image.files[0], refs);
+  });
+
+  refs.resetButton.addEventListener("click", () => {
+    clearMessage(refs.messageBox);
+    renderTechnologyPreview([], refs.techPreview);
+    clearImagePreview(refs);
+    updateCounter(refs.libelle, refs.libelleCount, 90);
+    updateCounter(refs.description, refs.descriptionCount, 1200);
+  });
+
+  refs.clearStorageButton.addEventListener("click", () => {
+    localStorage.removeItem(STORAGE_KEY);
+    refs.jsonOutput.textContent = "Aucun envoi pour le moment.";
+    showMessage(refs.messageBox, "Historique local supprime.", "success");
+  });
+
+  refs.form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    clearMessage(refs.messageBox);
+
+    if (!refs.form.reportValidity()) {
+      showMessage(refs.messageBox, "Merci de verifier les champs du formulaire.", "error");
+      return;
+    }
+
+    const payload = buildPayload(refs);
+    const businessValidation = validatePayload(payload);
+    if (!businessValidation.valid) {
+      showMessage(refs.messageBox, businessValidation.message, "error");
+      return;
+    }
+
+    setSubmittingState(refs, true);
+    saveProject(payload);
+    refs.jsonOutput.textContent = JSON.stringify(payload, null, 2);
+    showMessage(refs.messageBox, "Projet enregistre avec succes.", "success");
+
+    refs.form.reset();
+    renderTechnologyPreview([], refs.techPreview);
+    clearImagePreview(refs);
+    updateCounter(refs.libelle, refs.libelleCount, 90);
+    updateCounter(refs.description, refs.descriptionCount, 1200);
+    setSubmittingState(refs, false);
+  });
+}
+
+function renderInitialState(refs) {
+  const projects = readProjects();
+  if (projects.length === 0) {
+    refs.jsonOutput.textContent = "Aucun envoi pour le moment.";
+  } else {
+    refs.jsonOutput.textContent = JSON.stringify(projects[projects.length - 1], null, 2);
+  }
+
+  updateCounter(refs.libelle, refs.libelleCount, 90);
+  updateCounter(refs.description, refs.descriptionCount, 1200);
+}
+
+function buildPayload(refs) {
+  const formData = new FormData(refs.form);
+  return {
+    libelle: String(formData.get("libelle") || "").trim(),
+    description: String(formData.get("description") || "").trim(),
+    technologies: parseTechnologies(String(formData.get("technologies") || "")),
+    image: refs.image.files[0]?.name || "",
+    dateSoumission: new Date().toISOString(),
+  };
+}
+
 function parseTechnologies(rawValue) {
+  const seen = new Set();
   return rawValue
     .split(",")
     .map((item) => item.trim())
-    .filter((item, index, array) => item.length > 0 && array.indexOf(item) === index);
+    .filter((item) => {
+      if (!item) {
+        return false;
+      }
+      const normalized = item.toLowerCase();
+      if (seen.has(normalized)) {
+        return false;
+      }
+      seen.add(normalized);
+      return true;
+    });
+}
+
+function validatePayload(payload) {
+  if (payload.technologies.length === 0) {
+    return { valid: false, message: "Ajoutez au moins une technologie." };
+  }
+
+  if (!payload.image) {
+    return { valid: false, message: "Ajoutez une image de projet." };
+  }
+
+  const duplicate = readProjects().some(
+    (project) => String(project.libelle || "").trim().toLowerCase() === payload.libelle.toLowerCase(),
+  );
+  if (duplicate) {
+    return { valid: false, message: "Un projet avec ce libelle existe deja." };
+  }
+
+  return { valid: true, message: "" };
+}
+
+function validateImage(file) {
+  if (!file) {
+    return { valid: false, message: "Selectionnez une image valide (PNG, JPG, SVG)." };
+  }
+
+  if (!ALLOWED_IMAGE_TYPES.has(file.type)) {
+    return { valid: false, message: "Format invalide. Utilisez PNG, JPG ou SVG." };
+  }
+
+  if (file.size > MAX_IMAGE_SIZE_BYTES) {
+    return { valid: false, message: "Image trop lourde. Taille maximale: 4 Mo." };
+  }
+
+  return { valid: true, message: "" };
 }
 
 function renderTechnologyPreview(technologies, container) {
@@ -153,61 +184,23 @@ function renderTechnologyPreview(technologies, container) {
   });
 }
 
-function updateImagePreview(input, wrapper, image, caption) {
-  const file = input.files[0];
-  if (!file) {
-    wrapper.classList.add("hidden");
-    image.src = "";
-    caption.textContent = "";
-    return;
-  }
-
-  const isImageType = /^image\//.test(file.type);
-  if (!isImageType) {
-    wrapper.classList.add("hidden");
-    image.src = "";
-    caption.textContent = "";
-    return;
-  }
-
+function renderImagePreview(file, refs) {
   const objectUrl = URL.createObjectURL(file);
-  image.src = objectUrl;
-  caption.textContent = `${file.name} - ${Math.ceil(file.size / 1024)} Ko`;
-  wrapper.classList.remove("hidden");
-  image.onload = () => URL.revokeObjectURL(objectUrl);
+  refs.imagePreview.src = objectUrl;
+  refs.imagePreviewCaption.textContent = `${file.name} - ${Math.ceil(file.size / 1024)} Ko`;
+  refs.imagePreviewWrapper.classList.remove("hidden");
+  refs.imagePreview.onload = () => URL.revokeObjectURL(objectUrl);
 }
 
-function validateImageFile(file, allowedTypes, maxSizeBytes) {
-  if (!file) {
-    return { valid: false, message: "Ajoutez une image pour ce projet." };
-  }
-
-  if (!allowedTypes.includes(file.type)) {
-    return { valid: false, message: "Format invalide. Utilisez PNG, JPG ou SVG." };
-  }
-
-  if (file.size > maxSizeBytes) {
-    return { valid: false, message: "Image trop lourde. Taille maximale: 4 Mo." };
-  }
-
-  return { valid: true, message: "" };
+function clearImagePreview(refs) {
+  refs.imagePreview.src = "";
+  refs.imagePreviewCaption.textContent = "";
+  refs.imagePreviewWrapper.classList.add("hidden");
 }
 
-function fakeApiSubmit(payload) {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (!payload.libelle || !payload.description) {
-        reject(new Error("Payload invalide"));
-        return;
-      }
-      resolve({ ok: true, status: 201 });
-    }, 450);
-  });
-}
-
-function readSavedProjects() {
+function readProjects() {
   try {
-    const raw = localStorage.getItem("portfolio_projects");
+    const raw = localStorage.getItem(STORAGE_KEY);
     const parsed = raw ? JSON.parse(raw) : [];
     return Array.isArray(parsed) ? parsed : [];
   } catch (error) {
@@ -215,18 +208,21 @@ function readSavedProjects() {
   }
 }
 
-function saveProject(project) {
-  const projects = readSavedProjects();
-  projects.push(project);
-  localStorage.setItem("portfolio_projects", JSON.stringify(projects));
+function saveProject(payload) {
+  const projects = readProjects();
+  projects.push(payload);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(projects));
 }
 
-function hasDuplicateTitle(title) {
-  const normalizedTitle = title.trim().toLowerCase();
-  return readSavedProjects().some((project) => {
-    const existingTitle = String(project.libelle || "").trim().toLowerCase();
-    return existingTitle === normalizedTitle;
-  });
+function updateCounter(input, counter, max) {
+  counter.textContent = `${input.value.length}/${max} caracteres`;
+}
+
+function setSubmittingState(refs, isSubmitting) {
+  refs.submitButton.disabled = isSubmitting;
+  refs.resetButton.disabled = isSubmitting;
+  refs.clearStorageButton.disabled = isSubmitting;
+  refs.submitButton.textContent = isSubmitting ? "Enregistrement..." : "Valider le projet";
 }
 
 function showMessage(container, text, type) {
@@ -235,23 +231,14 @@ function showMessage(container, text, type) {
   if (type === "success") {
     container.className =
       "rounded-2xl border border-emerald-300/40 bg-emerald-400/10 px-4 py-3 text-sm font-semibold text-emerald-300";
-  } else {
-    container.className =
-      "rounded-2xl border border-rose-300/40 bg-rose-400/10 px-4 py-3 text-sm font-semibold text-rose-200";
+    return;
   }
+
+  container.className =
+    "rounded-2xl border border-rose-300/40 bg-rose-400/10 px-4 py-3 text-sm font-semibold text-rose-200";
 }
 
 function clearMessage(container) {
   container.textContent = "";
   container.className = "hidden rounded-2xl border px-4 py-3 text-sm font-semibold";
-}
-
-function updateCharCount(input, counter, max) {
-  counter.textContent = `${input.value.length}/${max} caracteres`;
-}
-
-function setSubmittingState(submitButton, resetButton, isSubmitting) {
-  submitButton.disabled = isSubmitting;
-  resetButton.disabled = isSubmitting;
-  submitButton.textContent = isSubmitting ? "Envoi en cours..." : "Valider le projet";
 }
