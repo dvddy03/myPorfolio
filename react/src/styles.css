@@ -116,7 +116,9 @@ textarea {
 .site-nav {
   display: flex;
   gap: 0.75rem;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
   padding: 0.6rem;
   border: 1px solid var(--panel-border);
   border-radius: 999px;
@@ -125,9 +127,13 @@ textarea {
 }
 
 .nav-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 0.85rem 1.1rem;
   border-radius: 999px;
   color: var(--muted);
+  white-space: nowrap;
   transition: 180ms ease;
 }
 
@@ -192,12 +198,27 @@ textarea {
   padding: 2rem;
 }
 
+.hero-panel > :only-child {
+  grid-column: 1 / -1;
+  max-width: 820px;
+}
+
 .hero-actions,
 .link-row,
 .action-row {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
+  align-items: center;
+}
+
+.hero-actions {
+  justify-content: flex-start;
+}
+
+.hero-actions > * {
+  flex: 0 0 auto;
+  white-space: nowrap;
 }
 
 .button-primary,
@@ -548,6 +569,10 @@ textarea {
   .site-identity {
     align-items: flex-start;
   }
+
+  .site-nav {
+    align-self: flex-start;
+  }
 }
 
 @media (max-width: 640px) {
@@ -558,6 +583,7 @@ textarea {
   }
 
   .site-nav {
+    flex-wrap: wrap;
     border-radius: 24px;
   }
 

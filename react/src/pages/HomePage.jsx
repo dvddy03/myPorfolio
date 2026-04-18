@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 const strengths = [
   {
     title: "Pentest et analyse de vulnerabilites",
@@ -57,18 +55,6 @@ function HomePage() {
             Ce portfolio presente des realisations concretes, documentees et preparees pour un usage
             professionnel.
           </p>
-        </div>
-
-        <div className="hero-actions">
-          <Link className="button-primary" to="/projets">
-            Voir les projets
-          </Link>
-          <a className="button-secondary" href="/documents/cv-papa-alioune-mbaye.pdf" target="_blank" rel="noreferrer">
-            Consulter le CV
-          </a>
-          <a className="button-secondary" href="#contact">
-            Me contacter
-          </a>
         </div>
       </section>
 
