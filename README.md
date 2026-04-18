@@ -30,7 +30,7 @@ Composants, props, `useState`, rendu de listes avec `map`, affichage conditionne
 
 ## Version React
 
-Le dossier `react/` contient une SPA React inspirée du support `ReactJS_Presentation.pptx`.
+Le dossier `react/` contient la version moderne du portfolio avec gestion des projets, images et base JSON.
 
 ### Base JSON
 
