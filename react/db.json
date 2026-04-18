@@ -88,6 +88,8 @@
       "year": "2026",
       "status": "En evolution",
       "coverTone": "violet",
+      "imageKey": "iot",
+      "imageUrl": "",
       "technologies": [
         "ESP32",
         "Arduino",
@@ -99,7 +101,6 @@
         "Experimentation de scan reseau Wi-Fi",
         "Prototypage rapide sur microcontroleur"
       ],
-      "imageKey": "iot",
       "githubUrl": "",
       "demoUrl": "",
       "createdAt": "2026-04-07T16:15:00.000Z"

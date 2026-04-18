@@ -2,23 +2,17 @@ import { Link } from "react-router-dom";
 
 const strengths = [
   {
-    title: "Securite defensive",
-    text: "Detection d'intrusion, analyse d'evenements, supervision et investigation autour des environnements reseau et systeme.",
+    title: "Pentest et analyse de vulnerabilites",
+    text: "Evaluation de la surface d'attaque, identification de faiblesses techniques et utilisation d'outils comme Nmap, Metasploit et Burp Suite.",
   },
   {
-    title: "Administration systeme",
-    text: "Mise en place de services critiques, gestion de postes, organisation de domaines et automatisation des taches courantes.",
+    title: "Administration systeme, reseau et SOC",
+    text: "Gestion d'environnements reseau et systeme, supervision, analyse de logs, IDS/IPS, SIEM et reponse aux incidents avec une approche terrain.",
   },
   {
-    title: "Culture projet",
-    text: "Documentation claire, restitution visuelle, progression mesurable et attention portee a la maintenabilite des realisations.",
+    title: "Cloud, conteneurs et infrastructure",
+    text: "Montee en competence sur AWS, deploiements sous Docker et Kubernetes, virtualisation VMware ESXi et outils de monitoring pour des plateformes plus robustes.",
   },
-];
-
-const highlights = [
-  "Portfolio avec base JSON et gestion locale des contenus",
-  "Fiches projet modifiables avec edition et suppression rapides",
-  "Presentation visuelle plus nette pour une future mise en ligne",
 ];
 
 function HomePage() {
@@ -29,9 +23,10 @@ function HomePage() {
           <p className="eyebrow">Profil technique</p>
           <h2>Construire des environnements fiables, lisibles et plus simples a administrer</h2>
           <p className="lead">
-            Ce portfolio rassemble des projets en administration systeme, securite, reseau et IoT.
-            L'objectif est de presenter un travail concret, documente et pret a etre partage dans un
-            cadre academique, professionnel ou de candidature.
+            Pentester junior oriente administration systeme, reseau et securite, avec un interet
+            marque pour les environnements SOC, l'infrastructure cloud et les plateformes defensives.
+            Ce portfolio presente des realisations concretes, documentees et preparees pour un usage
+            professionnel.
           </p>
         </div>
 
@@ -51,8 +46,8 @@ function HomePage() {
           <span>projets techniques deja structures</span>
         </article>
         <article className="metric-card">
-          <strong>3</strong>
-          <span>domaines principaux: systeme, reseau, securite</span>
+          <strong>4</strong>
+          <span>domaines principaux: pentest, systeme, reseau, cloud & securite</span>
         </article>
         <article className="metric-card">
           <strong>100%</strong>
@@ -67,16 +62,6 @@ function HomePage() {
             <p>{item.text}</p>
           </article>
         ))}
-      </section>
-
-      <section className="callout-panel">
-        <p className="eyebrow">Ce portfolio evolue</p>
-        <h3>Une base professionnelle pour publier plus tard avec des contenus propres et a jour</h3>
-        <ul className="detail-list">
-          {highlights.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
       </section>
     </div>
   );
