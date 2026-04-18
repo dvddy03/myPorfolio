@@ -15,6 +15,7 @@ Portfolio HTML/CSS de **Papa Alioune Mbaye** — Administration Système, Résea
 - `tailwind/projets.html` : liste des projets en Tailwind CSS
 - `tailwind/detailler-projet-*.html` : fiches projets en Tailwind CSS
 - `tailwind/ajouter-projet.html` : formulaire de projet en Tailwind CSS
+- `react/` : nouvelle version React du portfolio avec routage, formulaire et base JSON
 
 ## Concepts illustrés
 
@@ -23,6 +24,35 @@ Structure sémantique, balises, attributs, liens, images, listes imbriquées, fo
 
 ### CSS
 Sélecteurs (type, attribut, id, classe), combinateurs, modèle de boîte, Flexbox, media queries, hover effects
+
+### React
+Composants, props, `useState`, rendu de listes avec `map`, affichage conditionnel, formulaires contrôlés, `fetch`, React Router
+
+## Version React
+
+Le dossier `react/` contient une SPA React inspirée du support `ReactJS_Presentation.pptx`.
+
+### Base JSON
+
+- `react/db.json` contient la collection `projects`
+- `npm run api` lance `json-server` sur `http://localhost:4000`
+
+### Lancer la partie React
+
+```bash
+cd react
+npm install
+npm run api
+```
+
+Dans un second terminal :
+
+```bash
+cd react
+npm run dev
+```
+
+L'application React est alors disponible sur `http://localhost:5173` et l'API JSON sur `http://localhost:4000/projects`.
 
 ## Auteur
 Papa Alioune Mbaye — Groupe ISI, Licence 3 Réseau Informatique (2024-2025)

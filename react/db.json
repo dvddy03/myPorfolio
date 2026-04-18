@@ -1,0 +1,129 @@
+{
+  "projects": [
+    {
+      "id": "1",
+      "slug": "suricata-snort-ids-ips",
+      "title": "Deploiement IDS / IPS avec Suricata et Snort",
+      "summary": "Surveillance de trafic, creation de regles et analyse d'evenements suspects dans un environnement Linux.",
+      "description": "Projet de mise en place d'une chaine de detection d'intrusion avec Suricata, Snort et Wireshark. L'objectif etait de surveiller le trafic reseau, d'identifier des signatures d'attaque et de produire une lecture plus claire des alertes generees.",
+      "category": "Detection & analyse",
+      "year": "2026",
+      "status": "Termine",
+      "coverTone": "ocean",
+      "technologies": [
+        "Suricata",
+        "Snort",
+        "Wireshark",
+        "Linux"
+      ],
+      "highlights": [
+        "Creation et test de regles IDS/IPS",
+        "Analyse de trafic reseau en laboratoire",
+        "Documentation des alertes de securite"
+      ],
+      "imageKey": "ids",
+      "githubUrl": "",
+      "demoUrl": "",
+      "createdAt": "2026-04-01T09:00:00.000Z"
+    },
+    {
+      "id": "2",
+      "slug": "gestion-logs-siem",
+      "title": "Gestion des journaux et analyse des incidents",
+      "summary": "Collecte, correlation et visualisation de logs de securite pour accelerer l'analyse d'incidents.",
+      "description": "Ce projet porte sur la centralisation des journaux, leur correlation et la creation de tableaux de bord d'analyse avec une logique SOC. Il met l'accent sur la visibilite, le tri des evenements et la rapidite d'investigation.",
+      "category": "SOC & SIEM",
+      "year": "2026",
+      "status": "Termine",
+      "coverTone": "ember",
+      "technologies": [
+        "Wazuh",
+        "Kibana",
+        "Splunk",
+        "ELK"
+      ],
+      "highlights": [
+        "Centralisation de logs multi-sources",
+        "Visualisation des incidents dans des dashboards",
+        "Priorisation des alertes"
+      ],
+      "imageKey": "siem",
+      "githubUrl": "",
+      "demoUrl": "",
+      "createdAt": "2026-04-03T13:00:00.000Z"
+    },
+    {
+      "id": "3",
+      "slug": "active-directory-services-reseau",
+      "title": "Administration Active Directory et services reseau",
+      "summary": "Mise en place d'un domaine Windows Server avec comptes, GPO, DNS, DHCP et partage SMB.",
+      "description": "L'objectif etait de simuler un environnement d'entreprise avec administration centralisee. Le projet couvre l'integration de services reseau critiques et la gestion des postes dans une logique de gouvernance systeme.",
+      "category": "Systeme & reseau",
+      "year": "2026",
+      "status": "Termine",
+      "coverTone": "forest",
+      "technologies": [
+        "Active Directory",
+        "DNS",
+        "DHCP",
+        "PXE"
+      ],
+      "highlights": [
+        "Creation d'un domaine d'entreprise",
+        "Strategie GPO pour la gestion des postes",
+        "Services reseau integres au domaine"
+      ],
+      "imageKey": "ad",
+      "githubUrl": "",
+      "demoUrl": "",
+      "createdAt": "2026-04-05T11:30:00.000Z"
+    },
+    {
+      "id": "4",
+      "slug": "iot-esp32-capteurs",
+      "title": "Systemes IoT avec ESP32, capteurs et scan Wi-Fi",
+      "summary": "Mini-projets autour de l'ESP32, de la detection d'obstacles, de l'environnement et du reseau sans fil.",
+      "description": "Serie d'experiences embarquees avec ESP32 et Arduino pour exploiter des capteurs et observer l'environnement. Le travail combine electronique, developpement embarque et restitution de donnees utiles.",
+      "category": "IoT & embarque",
+      "year": "2026",
+      "status": "En evolution",
+      "coverTone": "violet",
+      "technologies": [
+        "ESP32",
+        "Arduino",
+        "DHT11",
+        "Wi-Fi"
+      ],
+      "highlights": [
+        "Lecture de capteurs environnementaux",
+        "Experimentation de scan reseau Wi-Fi",
+        "Prototypage rapide sur microcontroleur"
+      ],
+      "imageKey": "iot",
+      "githubUrl": "",
+      "demoUrl": "",
+      "createdAt": "2026-04-07T16:15:00.000Z"
+    },
+    {
+      "id": "eRmpZ0cFhCQ",
+      "slug": "fefe",
+      "title": "fefe",
+      "summary": "zfffer\"tgeeg",
+      "description": "fzgg\"'t\"'fgerg\"'''dddsffsdfqsdfqsdfqeffgegegezrgzgzazg",
+      "category": "Detection & analyse",
+      "year": "2026",
+      "status": "En evolution",
+      "coverTone": "forest",
+      "imageKey": "",
+      "imageUrl": "ezzef",
+      "technologies": [
+        "vjvj vov^kv^sp"
+      ],
+      "highlights": [],
+      "githubUrl": "",
+      "demoUrl": "",
+      "createdAt": "2026-04-18T12:38:07.012Z"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
