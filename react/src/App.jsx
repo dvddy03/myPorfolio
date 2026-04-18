@@ -40,6 +40,21 @@ function App() {
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
+
+      <footer className="site-footer">
+        <div className="site-footer-inner">
+          <p>Papa Alioune Mbaye</p>
+          <div className="site-footer-links">
+            <a href="mailto:papalioune03@gmail.com">papalioune03@gmail.com</a>
+            <a href="https://github.com/dvddy03" target="_blank" rel="noreferrer">
+              GitHub
+            </a>
+            <a href="/documents/cv-papa-alioune-mbaye.pdf" target="_blank" rel="noreferrer">
+              CV PDF
+            </a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

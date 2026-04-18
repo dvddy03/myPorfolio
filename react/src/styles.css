@@ -52,7 +52,8 @@ textarea {
 }
 
 .site-header,
-.page-container {
+.page-container,
+.site-footer-inner {
   position: relative;
   z-index: 1;
   width: min(1180px, calc(100% - 2rem));
@@ -140,6 +141,29 @@ textarea {
   padding-bottom: 3rem;
 }
 
+.site-footer {
+  padding: 0 0 2rem;
+}
+
+.site-footer-inner {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.5rem;
+  color: var(--muted);
+}
+
+.site-footer-inner p {
+  margin: 0;
+}
+
+.site-footer-links {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
 .page-stack {
   display: grid;
   gap: 1.5rem;
@@ -224,7 +248,9 @@ textarea {
 .info-grid,
 .projects-grid,
 .detail-grid,
-.metrics-grid {
+.metrics-grid,
+.contact-grid,
+.section-split {
   display: grid;
   gap: 1.25rem;
 }
@@ -237,9 +263,17 @@ textarea {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.contact-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .projects-grid,
 .detail-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.section-split {
+  grid-template-columns: 1.1fr 0.9fr;
 }
 
 .info-card,
@@ -274,6 +308,29 @@ textarea {
 
 .metric-card span {
   color: var(--muted);
+}
+
+.contact-card {
+  display: grid;
+  gap: 0.45rem;
+  padding: 1.1rem 1.2rem;
+  border-radius: 22px;
+  border: 1px solid var(--panel-border);
+  background: rgba(7, 20, 31, 0.7);
+}
+
+.contact-label {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.contact-link,
+.contact-value {
+  font-size: 1rem;
+  font-weight: 700;
 }
 
 .project-cover {
@@ -478,7 +535,9 @@ textarea {
   .detail-grid,
   .projects-grid,
   .info-grid,
-  .metrics-grid {
+  .metrics-grid,
+  .contact-grid,
+  .section-split {
     grid-template-columns: 1fr;
   }
 
@@ -493,7 +552,8 @@ textarea {
 
 @media (max-width: 640px) {
   .site-header,
-  .page-container {
+  .page-container,
+  .site-footer-inner {
     width: min(100% - 1rem, 1180px);
   }
 
@@ -517,5 +577,10 @@ textarea {
     width: 72px;
     height: 72px;
     border-radius: 22px;
+  }
+
+  .site-footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
