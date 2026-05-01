@@ -38,6 +38,15 @@ function App() {
         </div>
 
         <div className="site-nav-shell">
+          {isMenuOpen ? (
+            <button
+              className="menu-backdrop"
+              type="button"
+              aria-label="Fermer le menu"
+              onClick={() => setIsMenuOpen(false)}
+            />
+          ) : null}
+
           <button
             className="menu-toggle"
             type="button"
