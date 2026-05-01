@@ -1,4 +1,5 @@
-import { NavLink, Route, Routes } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { NavLink, Route, Routes, useLocation } from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useAuth } from "./context/AuthContext";
 import HomePage from "./pages/HomePage";
@@ -12,6 +13,12 @@ import { getProfileImage } from "./utils/assets";
 
 function App() {
   const { isAuthenticated, signOut } = useAuth();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [location.pathname, location.hash]);
 
   return (
     <div className="app-shell">
@@ -23,28 +30,72 @@ function App() {
             <p className="eyebrow">Portfolio</p>
             <h1>Papa Alioune Mbaye</h1>
             <p className="site-subtitle">
-              Administration systeme, reseaux et securite. Un espace pour presenter des projets,
-              des realisations techniques et une progression orientee terrain.
+              Pentest, administration systeme, reseaux et securite defensive. Ce portfolio
+              rassemble des projets concrets, des environnements techniques mis en oeuvre et une
+              progression continue orientee pratique, analyse et employabilite.
             </p>
           </div>
         </div>
 
-        <nav className="site-nav" aria-label="Navigation principale">
-          <NavItem to="/">Accueil</NavItem>
-          <NavItem to="/projets">Projets</NavItem>
-          <a className="nav-link" href="/#contact">
-            Contact
-          </a>
-          {isAuthenticated ? <NavItem to="/admin">Admin</NavItem> : null}
-          {isAuthenticated ? <NavItem to="/admin/projets/nouveau">Nouveau</NavItem> : null}
-          {isAuthenticated ? (
-            <button className="nav-button" type="button" onClick={signOut}>
-              Deconnexion
-            </button>
-          ) : (
-            <NavItem to="/admin/connexion">Connexion</NavItem>
-          )}
-        </nav>
+        <div className="site-nav-shell">
+          <button
+            className="menu-toggle"
+            type="button"
+            aria-expanded={isMenuOpen}
+            aria-controls="site-navigation"
+            aria-label={isMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
+            onClick={() => setIsMenuOpen((current) => !current)}
+          >
+            <span className="menu-toggle-box" aria-hidden="true">
+              <span className={isMenuOpen ? "menu-toggle-line menu-toggle-line-top menu-toggle-line-open" : "menu-toggle-line menu-toggle-line-top"} />
+              <span className={isMenuOpen ? "menu-toggle-line menu-toggle-line-middle menu-toggle-line-open" : "menu-toggle-line menu-toggle-line-middle"} />
+              <span className={isMenuOpen ? "menu-toggle-line menu-toggle-line-bottom menu-toggle-line-open" : "menu-toggle-line menu-toggle-line-bottom"} />
+            </span>
+            <span className="menu-toggle-text">{isMenuOpen ? "Fermer" : "Menu"}</span>
+          </button>
+
+          <nav
+            id="site-navigation"
+            className={isMenuOpen ? "site-nav site-nav-open" : "site-nav"}
+            aria-label="Navigation principale"
+          >
+            <NavItem to="/" onNavigate={() => setIsMenuOpen(false)}>
+              Accueil
+            </NavItem>
+            <NavItem to="/projets" onNavigate={() => setIsMenuOpen(false)}>
+              Projets
+            </NavItem>
+            <a className="nav-link" href="/#contact" onClick={() => setIsMenuOpen(false)}>
+              Contact
+            </a>
+            {isAuthenticated ? (
+              <NavItem to="/admin" onNavigate={() => setIsMenuOpen(false)}>
+                Admin
+              </NavItem>
+            ) : null}
+            {isAuthenticated ? (
+              <NavItem to="/admin/projets/nouveau" onNavigate={() => setIsMenuOpen(false)}>
+                Nouveau
+              </NavItem>
+            ) : null}
+            {isAuthenticated ? (
+              <button
+                className="nav-button"
+                type="button"
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  signOut();
+                }}
+              >
+                Deconnexion
+              </button>
+            ) : (
+              <NavItem to="/admin/connexion" onNavigate={() => setIsMenuOpen(false)}>
+                Connexion
+              </NavItem>
+            )}
+          </nav>
+        </div>
       </header>
 
       <main className="page-container">
@@ -99,10 +150,11 @@ function App() {
   );
 }
 
-function NavItem({ to, children }) {
+function NavItem({ to, children, onNavigate }) {
   return (
     <NavLink
       to={to}
+      onClick={onNavigate}
       className={({ isActive }) => (isActive ? "nav-link nav-link-active" : "nav-link")}
     >
       {children}
