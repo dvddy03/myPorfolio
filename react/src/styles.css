@@ -67,6 +67,7 @@ textarea {
   justify-content: space-between;
   align-items: flex-start;
   padding: 2rem 0 1.5rem;
+  min-height: 6.5rem;
 }
 
 .site-identity {
@@ -75,7 +76,7 @@ textarea {
   gap: 1rem;
   align-items: center;
   min-width: 0;
-  max-width: 560px;
+  max-width: calc(100% - 13rem);
 }
 
 .site-identity > div {
@@ -127,30 +128,45 @@ textarea {
 }
 
 .site-nav {
-  display: flex;
-  flex: 0 1 auto;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 0.75rem;
-  flex-wrap: nowrap;
-  align-items: center;
-  justify-content: center;
-  max-width: 100%;
-  padding: 0.6rem;
-  border: 1px solid var(--panel-border);
-  border-radius: 999px;
-  background: rgba(4, 17, 28, 0.72);
+  align-items: stretch;
+  width: min(19rem, calc(100vw - 1rem));
+  margin-top: 0.85rem;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 28px;
+  background: rgba(4, 17, 28, 0);
   backdrop-filter: blur(18px);
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+  transform: translateY(-0.35rem);
+  box-shadow: none;
+  transition:
+    max-height 260ms ease,
+    padding 220ms ease,
+    border-color 220ms ease,
+    background 220ms ease,
+    opacity 200ms ease,
+    transform 220ms ease;
 }
 
 .site-nav-shell {
-  position: relative;
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 20;
   display: flex;
-  flex: 0 1 auto;
-  align-items: flex-start;
+  flex-direction: column;
+  align-items: flex-end;
   justify-content: flex-end;
 }
 
 .menu-toggle {
-  display: none;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
@@ -226,6 +242,7 @@ textarea {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
   padding: 0.85rem 1.1rem;
   border-radius: 999px;
   color: var(--muted);
@@ -237,6 +254,7 @@ textarea {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
   padding: 0.85rem 1.1rem;
   border-radius: 999px;
   border: 0;
@@ -252,6 +270,17 @@ textarea {
 .nav-button:hover {
   color: #041018;
   background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+}
+
+.site-nav-open {
+  max-height: 32rem;
+  opacity: 1;
+  pointer-events: auto;
+  padding: 1rem;
+  border-color: var(--panel-border);
+  background: rgba(4, 17, 28, 0.92);
+  transform: translateY(0);
+  box-shadow: var(--shadow);
 }
 
 .page-container {
@@ -674,24 +703,8 @@ textarea {
 }
 
 @media (max-width: 1120px) {
-  .site-header {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
   .site-identity {
-    max-width: none;
-  }
-
-  .site-nav-shell {
-    width: 100%;
-  }
-
-  .site-nav {
-    width: 100%;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    border-radius: 28px;
+    max-width: calc(100% - 13rem);
   }
 }
 
@@ -716,57 +729,12 @@ textarea {
 }
 
 @media (max-width: 760px) {
-  .menu-toggle {
-    display: inline-flex;
-    align-self: flex-end;
+  .site-header {
+    padding-top: 5.5rem;
   }
 
-  .site-nav-shell {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-  }
-
-  .site-nav {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    align-items: stretch;
-    width: 100%;
-    margin-top: 0.85rem;
-    padding: 0;
-    border-color: transparent;
-    background: rgba(4, 17, 28, 0);
-    border-radius: 28px;
-    max-height: 0;
-    opacity: 0;
-    overflow: hidden;
-    pointer-events: none;
-    transform: translateY(-0.35rem);
-    box-shadow: none;
-    transition:
-      max-height 260ms ease,
-      padding 220ms ease,
-      border-color 220ms ease,
-      background 220ms ease,
-      opacity 200ms ease,
-      transform 220ms ease;
-  }
-
-  .site-nav-open {
-    max-height: 28rem;
-    opacity: 1;
-    pointer-events: auto;
-    padding: 1rem;
-    border-color: var(--panel-border);
-    background: rgba(4, 17, 28, 0.92);
-    transform: translateY(0);
-    box-shadow: var(--shadow);
-  }
-
-  .nav-link,
-  .nav-button {
-    width: 100%;
+  .site-identity {
+    max-width: 100%;
   }
 }
 
@@ -777,13 +745,16 @@ textarea {
     width: min(100% - 1rem, 1180px);
   }
 
-  .site-nav {
-    grid-template-columns: 1fr;
-    border-radius: 24px;
+  .site-nav-shell {
+    top: 0.75rem;
+    right: 0.75rem;
   }
 
-  .nav-link,
-  .nav-button,
+  .site-nav {
+    border-radius: 24px;
+    width: min(18rem, calc(100vw - 1rem));
+  }
+
   .button-primary,
   .button-secondary,
   .primary-link,
