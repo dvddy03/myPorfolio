@@ -1,3 +1,4 @@
 react/node_modules/
 react/dist/
 react/package-lock.json
+react/.env
