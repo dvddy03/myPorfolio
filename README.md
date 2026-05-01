@@ -1,6 +1,6 @@
 # myPortfolio
 
-Portfolio de **Papa Alioune Mbaye** avec trois versions front (`HTML/CSS`, `Tailwind`, `React`) et une API `Express.js + MongoDB` pour la version React.
+Portfolio de **Papa Alioune Mbaye** avec trois versions front (`HTML/CSS`, `Tailwind`, `React`) et une API `Express.js + MongoDB` securisee pour la version React.
 
 ## Pages
 
@@ -29,7 +29,7 @@ Selecteurs (type, attribut, id, classe), combinateurs, modele de boite, Flexbox,
 Composants, props, `useState`, rendu de listes avec `map`, affichage conditionnel, formulaires controles, `fetch`, React Router
 
 ### Express.js / MongoDB
-API REST, routage avec `express.Router`, middleware, variables d'environnement, persistance avec `mongoose`, seed de base de donnees
+API REST, routage avec `express.Router`, middleware, variables d'environnement, persistance avec `mongoose`, authentification admin, seed de base de donnees
 
 ## Version React + API Express
 
@@ -37,6 +37,7 @@ Le dossier `react/` contient maintenant :
 
 - le front Vite/React
 - l'API Express dans `react/server/`
+- l'entree Vercel serverless dans `react/api/`
 - le modele MongoDB `Project`
 - le fichier `react/db.json` utilise comme source de seed
 
@@ -44,7 +45,9 @@ Le dossier `react/` contient maintenant :
 
 1. Copier `react/.env.example` vers `react/.env`
 2. Verifier `MONGODB_URI`
-3. Garder `CLIENT_URL=http://localhost:5173` pour le developpement local
+3. Generer un hash admin avec `npm run hash:admin -- "VotreMotDePasse"`
+4. Renseigner `JWT_SECRET`, `ADMIN_EMAIL` et `ADMIN_PASSWORD_HASH`
+5. Garder `CLIENT_URL=http://localhost:5173` pour le developpement local
 
 ### Demarrer MongoDB
 
@@ -83,12 +86,17 @@ npm run server:dev
 
 L'API tourne alors sur `http://localhost:5000` avec :
 
+- `POST /api/auth/login`
+- `GET /api/auth/me`
+- `POST /api/auth/logout`
 - `GET /api/health`
 - `GET /api/projects`
 - `GET /api/projects/slug/:slug`
 - `POST /api/projects`
 - `PUT /api/projects/slug/:slug`
 - `DELETE /api/projects/slug/:slug`
+
+Les routes `POST`, `PUT` et `DELETE` sur les projets sont reservees a l'admin authentifie.
 
 ### Lancer le front React
 
@@ -100,6 +108,36 @@ npm run dev
 ```
 
 L'application React est disponible sur `http://localhost:5173`. En developpement, Vite redirige automatiquement `/api` vers `http://localhost:5000`.
+
+### Acces public et administration
+
+- visiteurs : `http://localhost:5173/` et `http://localhost:5173/projets`
+- administration : `http://localhost:5173/admin/connexion`
+
+Une fois connecte, l'admin peut gerer les projets via `/admin` et les formulaires `/admin/projets/*`.
+
+## Deploiement Vercel
+
+La configuration Vercel est preparee dans `react/vercel.json`.
+
+### Variables a definir dans Vercel
+
+- `MONGODB_URI`
+- `JWT_SECRET`
+- `ADMIN_EMAIL`
+- `ADMIN_PASSWORD_HASH`
+- `CLIENT_URL`
+
+Pour un domaine final, `CLIENT_URL` doit contenir l'URL publique exacte, par exemple `https://mon-portfolio.vercel.app`.
+
+### Mise en ligne conseillee
+
+1. pousser le depot sur GitHub
+2. importer le dossier `react/` dans Vercel comme projet
+3. ajouter les variables d'environnement dans Vercel
+4. lancer un deploiement
+
+Le front Vite sera servi publiquement et les appels `/api/*` seront rediriges vers la fonction Vercel qui reutilise l'application Express avec MongoDB Atlas.
 
 ### Arreter MongoDB Docker
 

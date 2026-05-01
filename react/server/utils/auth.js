@@ -24,7 +24,7 @@ function getCookieOptions() {
 
   return {
     httpOnly: true,
-    sameSite: isProduction ? "none" : "lax",
+    sameSite: "lax",
     secure: isProduction,
     path: "/",
     maxAge: 12 * 60 * 60 * 1000,
