@@ -1,8 +1,8 @@
-import profileImage from "../../../profil.jpeg";
-import projectActiveDirectory from "../../../assets/project-ad.jpeg";
-import projectIds from "../../../assets/project-ids.png";
-import projectIot from "../../../assets/project-iot.svg";
-import projectSiem from "../../../assets/project-siem.png";
+import profileImage from "../assets/profil.jpeg";
+import projectActiveDirectory from "../assets/project-ad.jpeg";
+import projectIds from "../assets/project-ids.png";
+import projectIot from "../assets/project-iot.svg";
+import projectSiem from "../assets/project-siem.png";
 
 const projectImages = {
   ids: projectIds,
