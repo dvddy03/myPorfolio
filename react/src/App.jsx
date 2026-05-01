@@ -149,6 +149,9 @@ function App() {
             <a href="https://github.com/dvddy03" target="_blank" rel="noreferrer">
               GitHub
             </a>
+            <a href="https://www.linkedin.com/in/papa-alioune-mbaye-36043329a/" target="_blank" rel="noreferrer">
+              LinkedIn
+            </a>
             <a href="/documents/cv-papa-alioune-mbaye.pdf" target="_blank" rel="noreferrer">
               CV PDF
             </a>
