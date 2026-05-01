@@ -55,12 +55,12 @@ textarea {
 .page-container,
 .site-footer-inner {
   position: relative;
-  z-index: 1;
   width: min(1180px, calc(100% - 2rem));
   margin: 0 auto;
 }
 
 .site-header {
+  z-index: 5;
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem;
@@ -307,7 +307,12 @@ textarea {
 }
 
 .page-container {
+  z-index: 1;
   padding-bottom: 3rem;
+}
+
+.site-footer-inner {
+  z-index: 1;
 }
 
 .site-subtitle {
