@@ -1,6 +1,7 @@
 import express from "express";
 import Project from "../models/Project.js";
 import asyncHandler from "../middleware/asyncHandler.js";
+import { normalizeProjectPayload, slugify } from "../utils/projectPayload.js";
 
 const router = express.Router();
 
@@ -112,27 +113,14 @@ router.delete(
 );
 
 async function buildProjectPayload(values, currentSlug = "") {
-  const title = String(values.title || "").trim();
+  const normalizedPayload = normalizeProjectPayload(values);
   const requestedSlug = String(values.slug || "").trim();
-  const baseSlug = slugify(requestedSlug || title || "projet-react");
+  const baseSlug = slugify(requestedSlug || normalizedPayload.title || "projet-react");
   const slug = await ensureUniqueSlug(baseSlug, currentSlug);
 
   return {
+    ...normalizedPayload,
     slug,
-    title,
-    summary: String(values.summary || "").trim(),
-    description: String(values.description || "").trim(),
-    category: String(values.category || "Projet").trim(),
-    year: String(values.year || new Date().getUTCFullYear()).trim(),
-    status: String(values.status || "Nouveau").trim(),
-    coverTone: String(values.coverTone || "ocean").trim(),
-    imageKey: String(values.imageKey || "").trim(),
-    imageUrl: String(values.imageUrl || "").trim(),
-    technologies: normalizeList(values.technologies, ","),
-    highlights: normalizeList(values.highlights, "\n"),
-    githubUrl: String(values.githubUrl || "").trim(),
-    demoUrl: String(values.demoUrl || "").trim(),
-    createdAt: values.createdAt || new Date().toISOString(),
   };
 }
 
@@ -151,26 +139,6 @@ async function ensureUniqueSlug(baseSlug, currentSlug = "") {
 async function slugExists(slug, currentSlug) {
   const existingProject = await Project.findOne({ slug }).select("slug");
   return Boolean(existingProject && existingProject.slug !== currentSlug);
-}
-
-function normalizeList(value, separator) {
-  if (Array.isArray(value)) {
-    return value.map((item) => String(item).trim()).filter(Boolean);
-  }
-
-  return String(value || "")
-    .split(separator)
-    .map((item) => item.trim())
-    .filter(Boolean);
-}
-
-function slugify(value) {
-  return value
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "");
 }
 
 function escapeRegex(value) {
