@@ -55,7 +55,13 @@ async function buildRequestError(response) {
       message = payload.message;
     }
   } catch (_error) {
-    message = response.status === 401 ? "Authentification requise." : message;
+    if (response.status === 401) {
+      message =
+        "Connexion refusee sur cette URL. Utilisez l'adresse publique principale du portfolio.";
+    } else if (response.status === 403) {
+      message =
+        "Cette URL de deploiement est protegee. Ouvrez le portfolio depuis son adresse publique principale.";
+    }
   }
 
   return new Error(message);
