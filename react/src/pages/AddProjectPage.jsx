@@ -289,7 +289,7 @@ function AddProjectPage() {
             {isEditMode ? "Annuler les changements" : "Reinitialiser"}
           </button>
           {isEditMode ? (
-            <Link className="button-secondary" to={`/projets/${slug}`}>
+            <Link className="button-secondary" to={`/admin`}>
               Annuler
             </Link>
           ) : null}

@@ -137,8 +137,23 @@ textarea {
   transition: 180ms ease;
 }
 
+.nav-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 1.1rem;
+  border-radius: 999px;
+  border: 0;
+  color: var(--muted);
+  background: transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: 180ms ease;
+}
+
 .nav-link:hover,
-.nav-link-active {
+.nav-link-active,
+.nav-button:hover {
   color: #041018;
   background: linear-gradient(135deg, var(--accent), var(--accent-strong));
 }
@@ -271,7 +286,8 @@ textarea {
 .detail-grid,
 .metrics-grid,
 .contact-grid,
-.section-split {
+.section-split,
+.admin-actions-panel {
   display: grid;
   gap: 1.25rem;
 }
@@ -486,6 +502,15 @@ textarea {
 .project-form-react {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   padding: 1.75rem;
+}
+
+.auth-form {
+  max-width: 720px;
+}
+
+.auth-panel,
+.admin-overview {
+  max-width: 980px;
 }
 
 .field-shell {

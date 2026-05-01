@@ -10,7 +10,7 @@ const COVER_LABELS = {
   carbon: "cover-carbon",
 };
 
-function ProjectCard({ project, onDelete }) {
+function ProjectCard({ project, onDelete, showAdminActions = false }) {
   const coverClass = COVER_LABELS[project.coverTone] || COVER_LABELS.ocean;
   const imageSrc = getProjectImage(project);
 
@@ -46,16 +46,23 @@ function ProjectCard({ project, onDelete }) {
           <Link className="primary-link" to={`/projets/${project.slug}`}>
             Voir le detail
           </Link>
-          <Link className="button-secondary button-compact" to={`/projets/${project.slug}/modifier`}>
-            Modifier
-          </Link>
-          <button
-            className="button-danger button-compact"
-            type="button"
-            onClick={() => onDelete(project)}
-          >
-            Supprimer
-          </button>
+          {showAdminActions ? (
+            <>
+              <Link
+                className="button-secondary button-compact"
+                to={`/admin/projets/${project.slug}/modifier`}
+              >
+                Modifier
+              </Link>
+              <button
+                className="button-danger button-compact"
+                type="button"
+                onClick={() => onDelete(project)}
+              >
+                Supprimer
+              </button>
+            </>
+          ) : null}
         </div>
       </div>
     </article>

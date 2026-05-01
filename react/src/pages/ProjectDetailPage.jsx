@@ -1,5 +1,6 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { deleteProject } from "../services/projectService";
+import { useAuth } from "../context/AuthContext";
 import TechBadge from "../components/TechBadge";
 import { useProjects } from "../hooks/useProjects";
 import { getProjectImage } from "../utils/assets";
@@ -7,6 +8,7 @@ import { getProjectImage } from "../utils/assets";
 function ProjectDetailPage() {
   const { slug } = useParams();
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   const { projects, loading, error } = useProjects();
   const project = projects.find((item) => item.slug === slug);
   const imageSrc = project ? getProjectImage(project) : "";
@@ -121,14 +123,16 @@ function ProjectDetailPage() {
           )}
         </div>
 
-        <div className="link-row top-spacing">
-          <Link className="button-secondary" to={`/projets/${project.slug}/modifier`}>
-            Modifier le projet
-          </Link>
-          <button className="button-danger" type="button" onClick={handleDelete}>
-            Supprimer le projet
-          </button>
-        </div>
+        {isAuthenticated ? (
+          <div className="link-row top-spacing">
+            <Link className="button-secondary" to={`/admin/projets/${project.slug}/modifier`}>
+              Modifier le projet
+            </Link>
+            <button className="button-danger" type="button" onClick={handleDelete}>
+              Supprimer le projet
+            </button>
+          </div>
+        ) : null}
       </section>
     </div>
   );

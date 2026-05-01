@@ -74,6 +74,7 @@ async function requestJson(path, options = {}) {
 
   try {
     response = await fetch(`${API_BASE_URL}${path}`, {
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
         ...(options.headers || {}),
@@ -95,7 +96,10 @@ async function requestWithoutBody(path, options = {}) {
   let response;
 
   try {
-    response = await fetch(`${API_BASE_URL}${path}`, options);
+    response = await fetch(`${API_BASE_URL}${path}`, {
+      credentials: "include",
+      ...options,
+    });
   } catch (_error) {
     throw new Error("API Express indisponible. Verifiez le serveur et MongoDB.");
   }

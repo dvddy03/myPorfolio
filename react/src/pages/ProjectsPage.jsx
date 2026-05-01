@@ -1,5 +1,4 @@
 import { startTransition, useDeferredValue, useState } from "react";
-import { deleteProject } from "../services/projectService";
 import ProjectCard from "../components/ProjectCard";
 import { useProjects } from "../hooks/useProjects";
 
@@ -12,10 +11,9 @@ const categories = [
 ];
 
 function ProjectsPage() {
-  const { projects, loading, error, reloadProjects } = useProjects();
+  const { projects, loading, error } = useProjects();
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("Toutes");
-  const [actionMessage, setActionMessage] = useState("");
   const deferredSearch = useDeferredValue(search);
 
   const normalizedSearch = deferredSearch.trim().toLowerCase();
@@ -32,31 +30,14 @@ function ProjectsPage() {
     return matchesCategory && matchesSearch;
   });
 
-  async function handleDelete(project) {
-    const confirmed = window.confirm(`Supprimer le projet "${project.title}" ?`);
-    if (!confirmed) {
-      return;
-    }
-
-    try {
-      await deleteProject(project.slug);
-      setActionMessage("Projet supprime avec succes.");
-      reloadProjects();
-    } catch (deleteError) {
-      setActionMessage(
-        deleteError instanceof Error ? deleteError.message : "Suppression impossible.",
-      );
-    }
-  }
-
   return (
     <div className="page-stack">
       <section className="section-panel">
         <p className="eyebrow">Selection de projets</p>
         <h2>Des realisations techniques presentees de maniere claire et exploitable</h2>
         <p className="lead">
-          Explorez vos projets, filtrez-les par domaine, puis modifiez ou supprimez rapidement les
-          fiches pour garder un portfolio propre avant publication.
+          Explorez les projets, filtrez-les par domaine et parcourez les fiches de maniere simple
+          avant une prise de contact ou une collaboration.
         </p>
 
         <div className="filters-row">
@@ -88,8 +69,6 @@ function ProjectsPage() {
         </div>
       </section>
 
-      {actionMessage ? <p className="status-card">{actionMessage}</p> : null}
-
       {loading && <p className="status-card">Chargement des projets...</p>}
       {!loading && !error && filteredProjects.length === 0 && (
         <div className="empty-state">
@@ -101,7 +80,7 @@ function ProjectsPage() {
       {!loading && filteredProjects.length > 0 && (
         <section className="projects-grid">
           {filteredProjects.map((project) => (
-            <ProjectCard key={project.slug} project={project} onDelete={handleDelete} />
+            <ProjectCard key={project.slug} project={project} />
           ))}
         </section>
       )}

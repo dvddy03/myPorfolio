@@ -1,12 +1,18 @@
 import { NavLink, Route, Routes } from "react-router-dom";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { useAuth } from "./context/AuthContext";
 import HomePage from "./pages/HomePage";
 import ProjectsPage from "./pages/ProjectsPage";
 import ProjectDetailPage from "./pages/ProjectDetailPage";
 import AddProjectPage from "./pages/AddProjectPage";
 import NotFoundPage from "./pages/NotFoundPage";
+import AdminLoginPage from "./pages/AdminLoginPage";
+import AdminDashboardPage from "./pages/AdminDashboardPage";
 import { getProfileImage } from "./utils/assets";
 
 function App() {
+  const { isAuthenticated, signOut } = useAuth();
+
   return (
     <div className="app-shell">
       <div className="app-background" aria-hidden="true" />
@@ -26,7 +32,18 @@ function App() {
         <nav className="site-nav" aria-label="Navigation principale">
           <NavItem to="/">Accueil</NavItem>
           <NavItem to="/projets">Projets</NavItem>
-          <NavItem to="/ajouter">Ajouter</NavItem>
+          <a className="nav-link" href="/#contact">
+            Contact
+          </a>
+          {isAuthenticated ? <NavItem to="/admin">Admin</NavItem> : null}
+          {isAuthenticated ? <NavItem to="/admin/projets/nouveau">Nouveau</NavItem> : null}
+          {isAuthenticated ? (
+            <button className="nav-button" type="button" onClick={signOut}>
+              Deconnexion
+            </button>
+          ) : (
+            <NavItem to="/admin/connexion">Connexion</NavItem>
+          )}
         </nav>
       </header>
 
@@ -35,8 +52,31 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/projets" element={<ProjectsPage />} />
           <Route path="/projets/:slug" element={<ProjectDetailPage />} />
-          <Route path="/ajouter" element={<AddProjectPage />} />
-          <Route path="/projets/:slug/modifier" element={<AddProjectPage />} />
+          <Route path="/admin/connexion" element={<AdminLoginPage />} />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute>
+                <AdminDashboardPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/projets/nouveau"
+            element={
+              <ProtectedRoute>
+                <AddProjectPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/projets/:slug/modifier"
+            element={
+              <ProtectedRoute>
+                <AddProjectPage />
+              </ProtectedRoute>
+            }
+          />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
