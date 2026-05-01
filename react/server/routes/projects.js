@@ -1,4 +1,5 @@
 import express from "express";
+import requireAdmin from "../middleware/requireAdmin.js";
 import Project from "../models/Project.js";
 import asyncHandler from "../middleware/asyncHandler.js";
 import { normalizeProjectPayload, slugify } from "../utils/projectPayload.js";
@@ -61,6 +62,7 @@ router.get(
 
 router.post(
   "/",
+  requireAdmin,
   asyncHandler(async (req, res) => {
     const payload = await buildProjectPayload(req.body);
     const project = await Project.create(payload);
@@ -70,6 +72,7 @@ router.post(
 
 router.put(
   "/slug/:slug",
+  requireAdmin,
   asyncHandler(async (req, res) => {
     const currentProject = await Project.findOne({ slug: req.params.slug.toLowerCase() });
 
@@ -99,6 +102,7 @@ router.put(
 
 router.delete(
   "/slug/:slug",
+  requireAdmin,
   asyncHandler(async (req, res) => {
     const deletedProject = await Project.findOneAndDelete({ slug: req.params.slug.toLowerCase() });
 
