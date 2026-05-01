@@ -43,7 +43,7 @@ function ProjectDetailPage() {
     return (
       <div className="empty-state">
         <h2>Projet introuvable</h2>
-        <p>Le slug demande n'existe pas dans la base JSON ni dans le stockage local.</p>
+        <p>Le slug demande n'existe pas dans l'API Express ni dans la base MongoDB.</p>
         <Link className="button-primary" to="/projets">
           Retour aux projets
         </Link>
