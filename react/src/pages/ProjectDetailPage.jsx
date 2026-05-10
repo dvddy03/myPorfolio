@@ -1,16 +1,14 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { deleteProject } from "../services/projectService";
-import { useAuth } from "../context/AuthContext";
 import TechBadge from "../components/TechBadge";
 import { useProjects } from "../hooks/useProjects";
 import { getProjectImage } from "../utils/assets";
 
 function ProjectDetailPage() {
-  const { slug } = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
   const { projects, loading, error } = useProjects();
-  const project = projects.find((item) => item.slug === slug);
+  const project = projects.find((item) => item._id === id);
   const imageSrc = project ? getProjectImage(project) : "";
 
   async function handleDelete() {
@@ -24,7 +22,7 @@ function ProjectDetailPage() {
     }
 
     try {
-      await deleteProject(project.slug);
+      await deleteProject(project._id);
       navigate("/projets");
     } catch (deleteError) {
       window.alert(
@@ -45,7 +43,7 @@ function ProjectDetailPage() {
     return (
       <div className="empty-state">
         <h2>Projet introuvable</h2>
-        <p>Le slug demande n'existe pas dans l'API Express ni dans la base MongoDB.</p>
+        <p>Le projet demande n'existe pas dans la base MongoDB.</p>
         <Link className="button-primary" to="/projets">
           Retour aux projets
         </Link>
@@ -123,16 +121,14 @@ function ProjectDetailPage() {
           )}
         </div>
 
-        {isAuthenticated ? (
-          <div className="link-row top-spacing">
-            <Link className="button-secondary" to={`/admin/projets/${project.slug}/modifier`}>
-              Modifier le projet
-            </Link>
-            <button className="button-danger" type="button" onClick={handleDelete}>
-              Supprimer le projet
-            </button>
-          </div>
-        ) : null}
+        <div className="link-row top-spacing">
+          <Link className="button-secondary" to={`/projets/${project._id}/modifier`}>
+            Modifier le projet
+          </Link>
+          <button className="button-danger" type="button" onClick={handleDelete}>
+            Supprimer le projet
+          </button>
+        </div>
       </section>
     </div>
   );

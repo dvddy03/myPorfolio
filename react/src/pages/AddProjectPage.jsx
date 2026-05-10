@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { createProject, getProjectBySlug, updateProject } from "../services/projectService";
+import { createProject, getProjectById, updateProject } from "../services/projectService";
 
 const initialForm = {
   title: "",
@@ -18,8 +18,8 @@ const initialForm = {
 };
 
 function AddProjectPage() {
-  const { slug } = useParams();
-  const isEditMode = Boolean(slug);
+  const { id } = useParams();
+  const isEditMode = Boolean(id);
   const [formValues, setFormValues] = useState(initialForm);
   const [initialSnapshot, setInitialSnapshot] = useState(initialForm);
   const [loading, setLoading] = useState(isEditMode);
@@ -43,7 +43,7 @@ function AddProjectPage() {
     async function loadProject() {
       try {
         setLoading(true);
-        const project = await getProjectBySlug(slug);
+        const project = await getProjectById(id);
 
         if (!mounted) {
           return;
@@ -86,7 +86,7 @@ function AddProjectPage() {
     return () => {
       mounted = false;
     };
-  }, [isEditMode, slug]);
+  }, [id, isEditMode]);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -102,7 +102,7 @@ function AddProjectPage() {
       setError("");
 
       const savedProject = isEditMode
-        ? await updateProject(slug, formValues)
+        ? await updateProject(id, formValues)
         : await createProject(formValues);
 
       setSuccessMessage(
@@ -115,7 +115,7 @@ function AddProjectPage() {
       }
 
       setTimeout(() => {
-        navigate(`/projets/${savedProject.slug}`);
+        navigate(`/projets/${savedProject._id}`);
       }, 500);
     } catch (submitError) {
       setError(submitError instanceof Error ? submitError.message : "Erreur lors de l'enregistrement.");
@@ -289,7 +289,7 @@ function AddProjectPage() {
             {isEditMode ? "Annuler les changements" : "Reinitialiser"}
           </button>
           {isEditMode ? (
-            <Link className="button-secondary" to={`/admin`}>
+            <Link className="button-secondary" to={`/projets/${id}`}>
               Annuler
             </Link>
           ) : null}
