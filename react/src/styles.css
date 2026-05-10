@@ -55,32 +55,23 @@ textarea {
 .page-container,
 .site-footer-inner {
   position: relative;
+  z-index: 1;
   width: min(1180px, calc(100% - 2rem));
   margin: 0 auto;
 }
 
 .site-header {
-  z-index: 5;
   display: flex;
-  flex-wrap: wrap;
   gap: 1.5rem;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: flex-end;
   padding: 2rem 0 1.5rem;
-  min-height: 6.5rem;
 }
 
 .site-identity {
   display: flex;
-  flex: 1 1 320px;
   gap: 1rem;
   align-items: center;
-  min-width: 0;
-  max-width: calc(100% - 13rem);
-}
-
-.site-identity > div {
-  min-width: 0;
 }
 
 .site-avatar {
@@ -99,11 +90,6 @@ textarea {
 .empty-state h2 {
   margin: 0;
   line-height: 1.05;
-}
-
-.site-header h1 {
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  text-wrap: balance;
 }
 
 .site-subtitle,
@@ -128,197 +114,37 @@ textarea {
 }
 
 .site-nav {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.5rem;
-  align-items: stretch;
-  width: min(14rem, calc(100vw - 1rem));
-  margin-top: 0.6rem;
-  padding: 0;
-  border: 1px solid transparent;
-  border-radius: 22px;
-  background: rgba(4, 17, 28, 0);
-  backdrop-filter: blur(18px);
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  pointer-events: none;
-  transform: translateY(-0.35rem);
-  box-shadow: none;
-  transition:
-    max-height 260ms ease,
-    padding 220ms ease,
-    border-color 220ms ease,
-    background 220ms ease,
-    opacity 200ms ease,
-    transform 220ms ease;
-}
-
-.site-nav-shell {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  z-index: 20;
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: flex-end;
-}
-
-.menu-backdrop {
-  position: fixed;
-  inset: 0;
-  border: 0;
-  background: rgba(2, 10, 18, 0.54);
-  backdrop-filter: blur(8px);
-  cursor: default;
-}
-
-.menu-toggle {
-  position: relative;
-  z-index: 22;
-  display: inline-flex;
+  gap: 0.75rem;
+  flex-wrap: nowrap;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem;
-  min-height: 44px;
-  padding: 0.75rem 1rem;
+  padding: 0.6rem;
   border: 1px solid var(--panel-border);
   border-radius: 999px;
-  color: var(--text);
-  background: rgba(4, 17, 28, 0.88);
-  cursor: pointer;
-  transition:
-    background 180ms ease,
-    border-color 180ms ease,
-    transform 180ms ease;
-}
-
-.menu-toggle:hover {
-  border-color: rgba(163, 230, 255, 0.3);
-  background: rgba(8, 23, 36, 0.96);
-}
-
-.menu-toggle-box {
-  position: relative;
-  width: 22px;
-  height: 16px;
-}
-
-.menu-toggle-line {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  border-radius: 999px;
-  background: currentColor;
-  transform-origin: center;
-  transition:
-    transform 220ms ease,
-    opacity 180ms ease,
-    top 220ms ease;
-}
-
-.menu-toggle-line-top {
-  top: 0;
-}
-
-.menu-toggle-line-middle {
-  top: 7px;
-}
-
-.menu-toggle-line-bottom {
-  top: 14px;
-}
-
-.menu-toggle-line-top.menu-toggle-line-open {
-  top: 7px;
-  transform: rotate(45deg);
-}
-
-.menu-toggle-line-middle.menu-toggle-line-open {
-  opacity: 0;
-}
-
-.menu-toggle-line-bottom.menu-toggle-line-open {
-  top: 7px;
-  transform: rotate(-45deg);
-}
-
-.menu-toggle-text {
-  font-weight: 700;
+  background: rgba(4, 17, 28, 0.72);
+  backdrop-filter: blur(18px);
 }
 
 .nav-link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  min-height: 42px;
-  padding: 0.75rem 0.95rem;
+  padding: 0.85rem 1.1rem;
   border-radius: 999px;
   color: var(--muted);
-  white-space: nowrap;
-  transition: 180ms ease;
-}
-
-.nav-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  min-height: 42px;
-  padding: 0.75rem 0.95rem;
-  border-radius: 999px;
-  border: 0;
-  color: var(--muted);
-  background: transparent;
-  cursor: pointer;
   white-space: nowrap;
   transition: 180ms ease;
 }
 
 .nav-link:hover,
-.nav-link-active,
-.nav-button:hover {
+.nav-link-active {
   color: #041018;
   background: linear-gradient(135deg, var(--accent), var(--accent-strong));
 }
 
-.site-nav-open {
-  position: relative;
-  z-index: 22;
-  max-height: 22rem;
-  opacity: 1;
-  pointer-events: auto;
-  padding: 0.85rem;
-  border-color: rgba(163, 230, 255, 0.28);
-  background:
-    linear-gradient(180deg, rgba(10, 29, 43, 0.98), rgba(5, 17, 27, 0.98)),
-    rgba(4, 17, 28, 0.98);
-  transform: translateY(0);
-  box-shadow: 0 28px 70px rgba(2, 12, 20, 0.58);
-}
-
-.site-nav-open .nav-link,
-.site-nav-open .nav-button {
-  min-height: 48px;
-  font-weight: 700;
-}
-
 .page-container {
-  z-index: 1;
   padding-bottom: 3rem;
-}
-
-.site-footer-inner {
-  z-index: 1;
-}
-
-.site-subtitle {
-  margin: 1rem 0 0;
-  max-width: 38rem;
-  line-height: 1.45;
 }
 
 .site-footer {
@@ -445,8 +271,7 @@ textarea {
 .detail-grid,
 .metrics-grid,
 .contact-grid,
-.section-split,
-.admin-actions-panel {
+.section-split {
   display: grid;
   gap: 1.25rem;
 }
@@ -663,15 +488,6 @@ textarea {
   padding: 1.75rem;
 }
 
-.auth-form {
-  max-width: 720px;
-}
-
-.auth-panel,
-.admin-overview {
-  max-width: 980px;
-}
-
 .field-shell {
   display: grid;
   gap: 0.65rem;
@@ -730,13 +546,8 @@ textarea {
   margin-top: 1rem;
 }
 
-@media (max-width: 1120px) {
-  .site-identity {
-    max-width: calc(100% - 13rem);
-  }
-}
-
 @media (max-width: 900px) {
+  .site-header,
   .hero-panel,
   .detail-hero,
   .filters-row,
@@ -751,18 +562,16 @@ textarea {
     grid-template-columns: 1fr;
   }
 
+  .site-header {
+    align-items: stretch;
+  }
+
   .site-identity {
     align-items: flex-start;
   }
-}
 
-@media (max-width: 760px) {
-  .site-header {
-    padding-top: 5.5rem;
-  }
-
-  .site-identity {
-    max-width: 100%;
+  .site-nav {
+    align-self: flex-start;
   }
 }
 
@@ -773,20 +582,12 @@ textarea {
     width: min(100% - 1rem, 1180px);
   }
 
-  .site-nav-shell {
-    top: 0.75rem;
-    right: 0.75rem;
-  }
-
   .site-nav {
-    width: min(13rem, calc(100vw - 1rem));
-    border-radius: 20px;
+    flex-wrap: wrap;
+    border-radius: 24px;
   }
 
-  .site-nav-open {
-    padding: 0.75rem;
-  }
-
+  .nav-link,
   .button-primary,
   .button-secondary,
   .primary-link,
@@ -796,7 +597,6 @@ textarea {
 
   .site-identity {
     flex-direction: column;
-    max-width: none;
   }
 
   .site-avatar {
@@ -808,13 +608,5 @@ textarea {
   .site-footer-inner {
     flex-direction: column;
     align-items: flex-start;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .menu-toggle,
-  .menu-toggle-line,
-  .site-nav {
-    transition: none;
   }
 }

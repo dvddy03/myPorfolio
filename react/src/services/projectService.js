@@ -1,127 +1,100 @@
-const API_BASE_URL = (import.meta.env.VITE_API_URL || "/api").replace(/\/$/, "");
+const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
 
 export async function getProjects() {
-  return requestJson("/projects");
-}
-
-export async function getProjectBySlug(slug) {
-  return requestJson(`/projects/slug/${encodeURIComponent(slug)}`);
-}
-
-export async function createProject(values) {
-  const normalizedProject = normalizeProject(values);
-  return requestJson("/projects", {
-    method: "POST",
-    body: JSON.stringify(normalizedProject),
-  });
-}
-
-export async function updateProject(currentSlug, values) {
-  const normalizedProject = normalizeProject(
-    {
-      ...values,
-      slug: values.slug || currentSlug,
-    },
-  );
-  return requestJson(`/projects/slug/${encodeURIComponent(currentSlug)}`, {
-    method: "PUT",
-    body: JSON.stringify(normalizedProject),
-  });
-}
-
-export async function deleteProject(slug) {
-  return requestWithoutBody(`/projects/slug/${encodeURIComponent(slug)}`, {
-    method: "DELETE",
-  });
-}
-
-function normalizeProject(values) {
-  const title = String(values.title || "").trim();
-  const technologies = Array.isArray(values.technologies)
-    ? values.technologies
-    : String(values.technologies || "")
-        .split(",")
-        .map((item) => item.trim())
-        .filter(Boolean);
-  const highlights = Array.isArray(values.highlights)
-    ? values.highlights
-    : String(values.highlights || "")
-        .split("\n")
-        .map((item) => item.trim())
-        .filter(Boolean);
-
-  return {
-    slug: String(values.slug || "").trim(),
-    title,
-    summary: String(values.summary || "").trim(),
-    description: String(values.description || "").trim(),
-    category: String(values.category || "Projet").trim(),
-    year: String(values.year || new Date().getUTCFullYear()),
-    status: String(values.status || "Nouveau").trim(),
-    coverTone: String(values.coverTone || "ocean").trim(),
-    imageKey: String(values.imageKey || "").trim(),
-    imageUrl: String(values.imageUrl || "").trim(),
-    technologies,
-    highlights,
-    githubUrl: String(values.githubUrl || "").trim(),
-    demoUrl: String(values.demoUrl || "").trim(),
-    createdAt: String(values.createdAt || new Date().toISOString()),
-  };
-}
-
-async function requestJson(path, options = {}) {
-  let response;
-
-  try {
-    response = await fetch(`${API_BASE_URL}${path}`, {
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-        ...(options.headers || {}),
-      },
-      ...options,
-    });
-  } catch (_error) {
-    throw new Error("API Express indisponible. Verifiez le serveur et MongoDB.");
-  }
+  const response = await fetch(`${API_BASE_URL}/projects`);
 
   if (!response.ok) {
-    throw await buildRequestError(response);
+    throw new Error("Impossible de charger les projets.");
   }
 
   return response.json();
 }
 
-async function requestWithoutBody(path, options = {}) {
-  let response;
+export async function getProjectById(id) {
+  const response = await fetch(`${API_BASE_URL}/projects/${id}`);
 
-  try {
-    response = await fetch(`${API_BASE_URL}${path}`, {
-      credentials: "include",
-      ...options,
-    });
-  } catch (_error) {
-    throw new Error("API Express indisponible. Verifiez le serveur et MongoDB.");
+  if (response.status === 404) {
+    return null;
   }
 
   if (!response.ok) {
-    throw await buildRequestError(response);
+    throw new Error("Impossible de charger le projet.");
+  }
+
+  return response.json();
+}
+
+export async function createProject(values) {
+  const response = await fetch(`${API_BASE_URL}/projects`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(normalizeProject(values)),
+  });
+
+  if (!response.ok) {
+    throw new Error(await readError(response));
+  }
+
+  return response.json();
+}
+
+export async function updateProject(id, values) {
+  const response = await fetch(`${API_BASE_URL}/projects/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(normalizeProject(values)),
+  });
+
+  if (!response.ok) {
+    throw new Error(await readError(response));
+  }
+
+  return response.json();
+}
+
+export async function deleteProject(id) {
+  const response = await fetch(`${API_BASE_URL}/projects/${id}`, {
+    method: "DELETE",
+  });
+
+  if (!response.ok) {
+    throw new Error(await readError(response));
   }
 }
 
-async function buildRequestError(response) {
-  let message = "API indisponible.";
-
+async function readError(response) {
   try {
-    const payload = await response.json();
-    if (payload.message) {
-      message = payload.message;
-    }
+    const data = await response.json();
+    return data.erreur || "Une erreur est survenue.";
   } catch (_error) {
-    if (response.status === 404) {
-      message = "Projet introuvable.";
-    }
+    return "Une erreur est survenue.";
   }
+}
 
-  return new Error(message);
+function normalizeProject(values) {
+  return {
+    title: String(values.title || "").trim(),
+    summary: String(values.summary || "").trim(),
+    description: String(values.description || "").trim(),
+    category: String(values.category || "Projet").trim(),
+    year: String(values.year || new Date().getUTCFullYear()).trim(),
+    status: String(values.status || "Nouveau").trim(),
+    coverTone: String(values.coverTone || "ocean").trim(),
+    imageKey: String(values.imageKey || "").trim(),
+    imageUrl: String(values.imageUrl || "").trim(),
+    technologies: String(values.technologies || "")
+      .split(",")
+      .map((item) => item.trim())
+      .filter(Boolean),
+    highlights: String(values.highlights || "")
+      .split("\n")
+      .map((item) => item.trim())
+      .filter(Boolean),
+    githubUrl: String(values.githubUrl || "").trim(),
+    demoUrl: String(values.demoUrl || "").trim(),
+  };
 }

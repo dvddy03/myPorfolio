@@ -27,13 +27,13 @@ const contacts = [
   },
   {
     label: "Telephone",
-    value: "+221 77 249 96 82",
+    value: "+221 772 499 682",
     href: "tel:+221772499682",
   },
   {
-    label: "LinkedIn",
-    value: "linkedin.com/in/papa-alioune-mbaye-36043329a/",
-    href: "https://www.linkedin.com/in/papa-alioune-mbaye-36043329a/",
+    label: "GitHub",
+    value: "github.com/dvddy03",
+    href: "https://github.com/dvddy03",
   },
   {
     label: "Localisation",
@@ -126,8 +126,8 @@ function HomePage() {
           <a className="button-primary" href="mailto:papalioune03@gmail.com">
             Envoyer un email
           </a>
-          <a className="button-secondary" href="https://www.linkedin.com/in/papa-alioune-mbaye-36043329a/" target="_blank" rel="noreferrer">
-            Ouvrir LinkedIn
+          <a className="button-secondary" href="https://github.com/dvddy03" target="_blank" rel="noreferrer">
+            Ouvrir GitHub
           </a>
           <a className="button-secondary" href="/documents/cv-papa-alioune-mbaye.pdf" target="_blank" rel="noreferrer">
             Telecharger le CV

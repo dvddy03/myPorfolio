@@ -1,6 +1,6 @@
 react/node_modules/
 react/dist/
 react/package-lock.json
-react/.env
-
-.vercel
+backend/node_modules/
+backend/.env
+backend/package-lock.json
