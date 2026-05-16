@@ -1,6 +1,19 @@
-react/node_modules/
-react/dist/
-react/package-lock.json
-backend/node_modules/
-backend/.env
-backend/package-lock.json
+# Environnement
+.env
+*.env
+
+# Dépendances
+node_modules/
+**/node_modules/
+
+# Build Vite
+dist/
+**/dist/
+
+# Logs
+npm-debug.log*
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
