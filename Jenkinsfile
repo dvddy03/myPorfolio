@@ -2,10 +2,11 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_USER = "d4ddy03"
-        IMAGE_BACKEND  = "${DOCKERHUB_USER}/portfolio-backend"
-        IMAGE_FRONTEND = "${DOCKERHUB_USER}/portfolio-frontend"
-        IMAGE_TAG      = "${BUILD_NUMBER}"
+        DOCKERHUB_USER  = "d4ddy03"
+        IMAGE_BACKEND   = "${DOCKERHUB_USER}/portfolio-backend"
+        IMAGE_FRONTEND  = "${DOCKERHUB_USER}/portfolio-frontend"
+        IMAGE_TAG       = "${BUILD_NUMBER}"
+        COMPOSE_PROJECT = "myportfolio"
     }
 
     stages {
@@ -18,17 +19,16 @@ pipeline {
 
         stage("Build") {
             steps {
-                // Créer le .env depuis le template avant le build
                 sh "cp .env.example .env"
-                sh "docker compose build"
+                sh "docker compose -p ${COMPOSE_PROJECT} build"
             }
         }
 
         stage("Deploy") {
             steps {
-                sh "docker compose down --remove-orphans || true"
-                sh "docker compose up -d"
-                sh "docker compose ps"
+                sh "docker compose -p ${COMPOSE_PROJECT} down --remove-orphans || true"
+                sh "docker compose -p ${COMPOSE_PROJECT} up -d"
+                sh "docker compose -p ${COMPOSE_PROJECT} ps"
             }
         }
 
@@ -40,7 +40,7 @@ pipeline {
         }
         failure {
             echo "Pipeline echoue — verifier les logs ci-dessus."
-            sh "docker compose down || true"
+            sh "docker compose -p ${COMPOSE_PROJECT} down || true"
         }
         always {
             cleanWs()
