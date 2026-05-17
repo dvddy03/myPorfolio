@@ -18,6 +18,8 @@ pipeline {
 
         stage("Build") {
             steps {
+                // Créer le .env depuis le template avant le build
+                sh "cp .env.example .env"
                 sh "docker compose build"
             }
         }
