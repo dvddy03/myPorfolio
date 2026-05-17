@@ -9,6 +9,10 @@ pipeline {
         COMPOSE_PROJECT = "myportfolio"
     }
 
+    triggers {
+        githubPush()
+    }
+
     stages {
 
         stage("Checkout") {
