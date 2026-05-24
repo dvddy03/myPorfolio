@@ -2,9 +2,9 @@ FROM jenkins/jenkins:lts
 
 USER root
 
-# Installer Docker CLI + Compose plugin
+# Installer Docker CLI + Compose plugin + Python3
 RUN apt-get update -qq && \
-    apt-get install -y -qq gnupg curl && \
+    apt-get install -y -qq gnupg curl python3 python3-pip && \
     curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker.gpg && \
     echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker.gpg] https://download.docker.com/linux/debian bookworm stable" > /etc/apt/sources.list.d/docker.list && \
     apt-get update -qq && \
