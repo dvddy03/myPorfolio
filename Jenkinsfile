@@ -7,6 +7,7 @@ pipeline {
         IMAGE_FRONTEND  = "${DOCKERHUB_USER}/myportfolio-frontend"
         IMAGE_TAG       = "${BUILD_NUMBER}"
         COMPOSE_PROJECT = "myportfolio"
+        RECIPIENT       = "papalioune03@gmail.com"
     }
 
     triggers {
@@ -61,10 +62,42 @@ pipeline {
 
     post {
         success {
-            echo "Pipeline termine avec succes — Images pushees sur Docker Hub : ${IMAGE_BACKEND}:${IMAGE_TAG}"
+            emailext(
+                to: "${RECIPIENT}",
+                subject: "✅ Jenkins — ${JOB_NAME} #${BUILD_NUMBER} — SUCCES",
+                body: """
+                <html><body>
+                <h2 style="color:#2E75B6;">Pipeline Jenkins — Succès</h2>
+                <table>
+                  <tr><td><b>Projet</b></td><td>${JOB_NAME}</td></tr>
+                  <tr><td><b>Build</b></td><td>#${BUILD_NUMBER}</td></tr>
+                  <tr><td><b>Durée</b></td><td>${currentBuild.durationString}</td></tr>
+                  <tr><td><b>Images Docker Hub</b></td><td>${IMAGE_BACKEND}:${IMAGE_TAG}</td></tr>
+                  <tr><td><b>Portfolio</b></td><td><a href="http://192.168.93.239:8080">http://192.168.93.239:8080</a></td></tr>
+                </table>
+                <p><a href="${BUILD_URL}">Voir les logs Jenkins</a></p>
+                </body></html>
+                """,
+                mimeType: "text/html"
+            )
         }
         failure {
-            echo "Pipeline echoue — verifier les logs ci-dessus."
+            emailext(
+                to: "${RECIPIENT}",
+                subject: "❌ Jenkins — ${JOB_NAME} #${BUILD_NUMBER} — ECHEC",
+                body: """
+                <html><body>
+                <h2 style="color:#C00000;">Pipeline Jenkins — Échec</h2>
+                <table>
+                  <tr><td><b>Projet</b></td><td>${JOB_NAME}</td></tr>
+                  <tr><td><b>Build</b></td><td>#${BUILD_NUMBER}</td></tr>
+                  <tr><td><b>Durée</b></td><td>${currentBuild.durationString}</td></tr>
+                </table>
+                <p><a href="${BUILD_URL}console">Voir les logs d erreur</a></p>
+                </body></html>
+                """,
+                mimeType: "text/html"
+            )
             sh "docker compose -p ${COMPOSE_PROJECT} down || true"
         }
         always {
