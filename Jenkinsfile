@@ -3,8 +3,8 @@ pipeline {
 
     environment {
         DOCKERHUB_USER  = "d4ddy03"
-        IMAGE_BACKEND   = "${DOCKERHUB_USER}/portfolio-backend"
-        IMAGE_FRONTEND  = "${DOCKERHUB_USER}/portfolio-frontend"
+        IMAGE_BACKEND   = "${DOCKERHUB_USER}/myportfolio-backend"
+        IMAGE_FRONTEND  = "${DOCKERHUB_USER}/myportfolio-frontend"
         IMAGE_TAG       = "${BUILD_NUMBER}"
         COMPOSE_PROJECT = "myportfolio"
     }
@@ -61,7 +61,7 @@ pipeline {
 
     post {
         success {
-            echo "Pipeline termine avec succes — Images pushées sur Docker Hub : ${IMAGE_BACKEND}:${IMAGE_TAG}"
+            echo "Pipeline termine avec succes — Images pushees sur Docker Hub : ${IMAGE_BACKEND}:${IMAGE_TAG}"
         }
         failure {
             echo "Pipeline echoue — verifier les logs ci-dessus."
