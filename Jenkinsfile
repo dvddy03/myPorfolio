@@ -28,6 +28,27 @@ pipeline {
             }
         }
 
+        stage("Push") {
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: "dockerhub-creds",
+                    usernameVariable: "DOCKER_USER",
+                    passwordVariable: "DOCKER_PASS"
+                )]) {
+                    sh "echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin"
+                    sh "docker tag ${COMPOSE_PROJECT}-backend  ${IMAGE_BACKEND}:${IMAGE_TAG}"
+                    sh "docker tag ${COMPOSE_PROJECT}-frontend ${IMAGE_FRONTEND}:${IMAGE_TAG}"
+                    sh "docker tag ${COMPOSE_PROJECT}-backend  ${IMAGE_BACKEND}:latest"
+                    sh "docker tag ${COMPOSE_PROJECT}-frontend ${IMAGE_FRONTEND}:latest"
+                    sh "docker push ${IMAGE_BACKEND}:${IMAGE_TAG}"
+                    sh "docker push ${IMAGE_BACKEND}:latest"
+                    sh "docker push ${IMAGE_FRONTEND}:${IMAGE_TAG}"
+                    sh "docker push ${IMAGE_FRONTEND}:latest"
+                    sh "docker logout"
+                }
+            }
+        }
+
         stage("Deploy") {
             steps {
                 sh "docker compose -p ${COMPOSE_PROJECT} down --remove-orphans || true"
@@ -40,13 +61,14 @@ pipeline {
 
     post {
         success {
-            echo "Pipeline termine avec succes — Portfolio en ligne sur :8080"
+            echo "Pipeline termine avec succes — Images pushées sur Docker Hub : ${IMAGE_BACKEND}:${IMAGE_TAG}"
         }
         failure {
             echo "Pipeline echoue — verifier les logs ci-dessus."
             sh "docker compose -p ${COMPOSE_PROJECT} down || true"
         }
         always {
+            sh "docker logout || true"
             cleanWs()
         }
     }
