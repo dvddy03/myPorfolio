@@ -61,10 +61,31 @@ pipeline {
 
     post {
         success {
-            sh "python3 /home/mbaye/jenkins-notify.py SUCCESS"
+            emailext(
+                to: "papalioune03@gmail.com",
+                subject: "SUCCESS: Pipeline ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """
+                    Le pipeline a reussi !
+                    Job: ${env.JOB_NAME}
+                    Build: #${env.BUILD_NUMBER}
+                    Portfolio: http://192.168.93.239:8080
+                    Logs: ${env.BUILD_URL}
+                """,
+                mimeType: "text/plain"
+            )
         }
         failure {
-            sh "python3 /home/mbaye/jenkins-notify.py FAILURE"
+            emailext(
+                to: "papalioune03@gmail.com",
+                subject: "FAILURE: Pipeline ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """
+                    Le pipeline a echoue !
+                    Job: ${env.JOB_NAME}
+                    Build: #${env.BUILD_NUMBER}
+                    Logs: ${env.BUILD_URL}console
+                """,
+                mimeType: "text/plain"
+            )
             sh "docker compose -p ${COMPOSE_PROJECT} down || true"
         }
         always {
