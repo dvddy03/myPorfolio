@@ -1,0 +1,49 @@
+# Le frontend est servi par nginx. On utilise aussi l'image Docker Hub.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+  namespace: myportfolio
+  labels:
+    app: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: d4ddy03/myportfolio-frontend:latest
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "50m"
+            limits:
+              memory: "128Mi"
+              cpu: "100m"
+---
+# NodePort = Service accessible depuis l'extérieur du cluster
+# Différence avec ClusterIP :
+#   ClusterIP  -> interne seulement (mongo, backend)
+#   NodePort   -> expose un port sur le Node (la VM minikube)
+#   LoadBalancer -> crée un load balancer cloud (AWS ELB, GCP, etc.)
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+  namespace: myportfolio
+spec:
+  selector:
+    app: frontend
+  type: NodePort     # Accessible depuis l'extérieur via <IP-minikube>:<nodePort>
+  ports:
+    - port: 80           # Port du Service dans le cluster
+      targetPort: 80     # Port du Pod nginx
+      nodePort: 30080    # Port exposé sur le Node (30000-32767 autorisés)

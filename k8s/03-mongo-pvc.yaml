@@ -1,0 +1,17 @@
+# PersistentVolumeClaim (PVC) = une demande de stockage persistant.
+# Sans PVC, si le pod MongoDB redémarre, TOUTES les données sont perdues.
+# Le PVC dit à Kubernetes : "donne-moi 1 Go de stockage".
+# Kubernetes trouve automatiquement un PersistentVolume (PV) disponible.
+# Avec minikube, le StorageClass 'standard' crée automatiquement le volume.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongo-pvc
+  namespace: myportfolio
+spec:
+  accessModes:
+    - ReadWriteOnce    # RWO = un seul pod peut lire/écrire à la fois (suffisant pour MongoDB)
+  resources:
+    requests:
+      storage: 1Gi    # On demande 1 Go de stockage
+  # storageClassName: standard  # minikube utilise 'standard' par défaut (auto-provisionné)

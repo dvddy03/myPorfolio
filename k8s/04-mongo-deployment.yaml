@@ -1,0 +1,66 @@
+# Deployment = le contrôleur qui gère les Pods.
+# Un Pod = la plus petite unité Kubernetes = 1 ou plusieurs conteneurs.
+# Le Deployment garantit que le bon nombre de replicas tourne en permanence.
+# Si un Pod plante, le Deployment en recrée un automatiquement.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-deployment
+  namespace: myportfolio
+  labels:
+    app: mongo
+spec:
+  replicas: 1        # 1 seule instance MongoDB (pas de sharding ici - but éducatif)
+  selector:
+    matchLabels:
+      app: mongo     # Le Deployment gère les Pods qui ont le label app=mongo
+  template:
+    metadata:
+      labels:
+        app: mongo   # Label appliqué à chaque Pod créé
+    spec:
+      containers:
+        - name: mongo
+          image: mongo:7              # Même image que dans docker-compose.yml
+          ports:
+            - containerPort: 27017   # Port sur lequel MongoDB écoute dans le conteneur
+          env:
+            # Les valeurs viennent du Secret créé dans 01-secret.yaml
+            - name: MONGO_INITDB_ROOT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret      # Nom du Secret
+                  key: mongo-root-username  # Clé dans le Secret
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: mongo-root-password
+            - name: MONGO_INITDB_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: mongo-db-name
+          volumeMounts:
+            - name: mongo-storage
+              mountPath: /data/db    # Chemin où MongoDB stocke ses données
+      volumes:
+        - name: mongo-storage
+          persistentVolumeClaim:
+            claimName: mongo-pvc     # On utilise le PVC créé dans 03-mongo-pvc.yaml
+---
+# Service = point d'entrée réseau stable pour atteindre les Pods.
+# Les Pods ont des IPs qui changent à chaque redémarrage.
+# Le Service a une IP fixe et redirige le trafic vers les Pods via les labels.
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-service    # C'est ce nom que le backend utilise dans MONGODB_URI
+  namespace: myportfolio
+spec:
+  selector:
+    app: mongo           # Redirige vers les Pods avec label app=mongo
+  ports:
+    - port: 27017        # Port du Service (utilisé par les autres pods)
+      targetPort: 27017  # Port du Pod MongoDB
+  type: ClusterIP        # ClusterIP = accessible uniquement à l'intérieur du cluster

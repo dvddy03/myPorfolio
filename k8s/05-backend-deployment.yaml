@@ -1,0 +1,58 @@
+# Le backend utilise l'image qu'on a déjà poussée sur Docker Hub via Jenkins.
+# On n'a pas besoin de rebuilder - K8s télécharge l'image directement.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+  namespace: myportfolio
+  labels:
+    app: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: d4ddy03/myportfolio-backend:latest  # Image Docker Hub
+          ports:
+            - containerPort: 5000
+          # Les variables d'environnement viennent du ConfigMap
+          envFrom:
+            - configMapRef:
+                name: backend-config   # Charge TOUTES les clés du ConfigMap comme variables d'env
+          # Liveness probe : Kubernetes vérifie que le backend répond
+          # Si ça échoue 3 fois, le Pod est redémarré automatiquement
+          livenessProbe:
+            httpGet:
+              path: /        # Endpoint de santé de l'API
+              port: 5000
+            initialDelaySeconds: 30    # Attend 30s avant la première vérification
+            periodSeconds: 10          # Vérifie toutes les 10s
+            failureThreshold: 3        # Redémarre après 3 échecs
+          # Ressources : limite la consommation CPU/RAM du Pod
+          resources:
+            requests:
+              memory: "128Mi"    # Minimum garanti
+              cpu: "100m"        # 100 millicores = 0.1 CPU
+            limits:
+              memory: "256Mi"    # Maximum autorisé
+              cpu: "250m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+  namespace: myportfolio
+spec:
+  selector:
+    app: backend
+  ports:
+    - port: 5000
+      targetPort: 5000
+  type: ClusterIP    # Accessible uniquement dans le cluster (le frontend l'appelle en interne)

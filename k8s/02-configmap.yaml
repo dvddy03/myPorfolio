@@ -1,0 +1,15 @@
+# Un ConfigMap stocke des données de configuration NON sensibles.
+# Différence avec Secret : ConfigMap = config publique, Secret = données privées.
+# Ici on stocke l'URL de connexion MongoDB que le backend utilisera.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-config
+  namespace: myportfolio
+data:
+  # La valeur 'mongo-service' correspond au nom du Service MongoDB qu'on va créer.
+  # Dans Kubernetes, les pods se trouvent par leur nom de Service (DNS interne).
+  # C'est l'équivalent du réseau bridge Docker où les conteneurs se parlent par nom.
+  MONGODB_URI: "mongodb://admin:passer@mongo-service:27017/portfolio?authSource=admin"
+  PORT: "5000"
+  NODE_ENV: "production"

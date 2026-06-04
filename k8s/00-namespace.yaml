@@ -1,0 +1,10 @@
+# Un Namespace, c'est comme un dossier virtuel dans Kubernetes.
+# Il permet d'isoler les ressources d'un projet des autres.
+# Ici on crée le namespace myportfolio pour regrouper tous nos objets K8s.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: myportfolio
+  labels:
+    app: myportfolio
+    environment: dev

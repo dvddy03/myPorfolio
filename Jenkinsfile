@@ -7,17 +7,18 @@ pipeline {
         IMAGE_FRONTEND  = "${DOCKERHUB_USER}/myportfolio-frontend"
         IMAGE_TAG       = "${BUILD_NUMBER}"
         COMPOSE_PROJECT = "myportfolio"
+        K8S_NAMESPACE   = "myportfolio"
+        KUBECONFIG      = "/var/jenkins_home/.kube/config"
     }
 
-    triggers {
-        githubPush()
-    }
+    triggers { githubPush() }
 
     stages {
 
         stage("Checkout") {
             steps {
                 checkout scm
+                sh "git log -1 --oneline || true"
             }
         }
 
@@ -68,11 +69,24 @@ pipeline {
             }
         }
 
-        stage("Deploy") {
+        stage("Deploy Docker Compose") {
             steps {
                 sh "docker compose -p ${COMPOSE_PROJECT} down --remove-orphans || true"
                 sh "docker compose -p ${COMPOSE_PROJECT} up -d"
                 sh "docker compose -p ${COMPOSE_PROJECT} ps"
+            }
+        }
+
+        stage("Deploy Kubernetes") {
+            steps {
+                script {
+                    sh "kubectl get nodes --kubeconfig=${KUBECONFIG}"
+                    sh "kubectl set image deployment/backend-deployment backend=${IMAGE_BACKEND}:${IMAGE_TAG} -n ${K8S_NAMESPACE} --kubeconfig=${KUBECONFIG}"
+                    sh "kubectl set image deployment/frontend-deployment frontend=${IMAGE_FRONTEND}:${IMAGE_TAG} -n ${K8S_NAMESPACE} --kubeconfig=${KUBECONFIG}"
+                    sh "kubectl rollout status deployment/backend-deployment -n ${K8S_NAMESPACE} --timeout=120s --kubeconfig=${KUBECONFIG}"
+                    sh "kubectl rollout status deployment/frontend-deployment -n ${K8S_NAMESPACE} --timeout=120s --kubeconfig=${KUBECONFIG}"
+                    sh "kubectl get pods -n ${K8S_NAMESPACE} --kubeconfig=${KUBECONFIG}"
+                }
             }
         }
 
@@ -84,11 +98,11 @@ pipeline {
                 to: "papalioune03@gmail.com",
                 subject: "SUCCESS: Pipeline ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """Le pipeline a reussi !
-Job: ${env.JOB_NAME}
 Build: #${env.BUILD_NUMBER}
-Portfolio: http://192.168.93.239:8080
-SonarQube: http://192.168.93.239:9000/dashboard?id=myportfolio-pipeline
-Logs: ${env.BUILD_URL}""",
+Portfolio Docker Compose : http://192.168.93.239:8080
+Portfolio Kubernetes     : http://192.168.49.2:30080
+SonarQube                : http://192.168.93.239:9000/dashboard?id=myportfolio-pipeline
+Logs Jenkins             : ${env.BUILD_URL}""",
                 mimeType: "text/plain"
             )
         }
@@ -96,10 +110,7 @@ Logs: ${env.BUILD_URL}""",
             emailext(
                 to: "papalioune03@gmail.com",
                 subject: "FAILURE: Pipeline ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                body: """Le pipeline a echoue !
-Job: ${env.JOB_NAME}
-Build: #${env.BUILD_NUMBER}
-Logs: ${env.BUILD_URL}console""",
+                body: "Le pipeline a echoue ! Logs: ${env.BUILD_URL}console",
                 mimeType: "text/plain"
             )
             sh "docker compose -p ${COMPOSE_PROJECT} down || true"
