@@ -2,6 +2,13 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { createProject, getProjectById, updateProject } from "../services/projectService";
 
+function getButtonLabel(isSubmitting, editMode) {
+  if (isSubmitting) return "Enregistrement en cours...";
+  if (editMode) return "Enregistrer les changements";
+  return "Creer le projet";
+}
+
+
 const initialForm = {
   title: "",
   summary: "",
@@ -87,12 +94,6 @@ function AddProjectPage() {
       mounted = false;
     };
   }, [id, isEditMode]);
-
-  function getButtonLabel(isSubmitting, editMode) {
-    if (isSubmitting) return "Enregistrement en cours...";
-    if (editMode) return "Enregistrer les changements";
-    return "Creer le projet";
-  }
 
   async function handleSubmit(event) {
     event.preventDefault();
