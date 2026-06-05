@@ -70,7 +70,8 @@ async function readError(response) {
   try {
     const data = await response.json();
     return data.erreur || "Une erreur est survenue.";
-  } catch (_error) {
+  } catch (parseError) {
+    console.error("Impossible de parser la reponse erreur :", parseError);
     return "Une erreur est survenue.";
   }
 }

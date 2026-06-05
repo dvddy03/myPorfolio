@@ -44,12 +44,13 @@ async function seedProjects() {
   await mongoose.disconnect();
 }
 
-seedProjects().catch(async (error) => {
+// Top-level await : execution directe avec gestion d erreur explicite
+try {
+  await seedProjects();
+} catch (error) {
   console.error("Erreur pendant le seed :", error.message);
-
   if (mongoose.connection.readyState !== 0) {
     await mongoose.disconnect();
   }
-
   process.exit(1);
-});
+}

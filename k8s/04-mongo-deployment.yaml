@@ -43,9 +43,11 @@ spec:
           resources:
             requests:
               memory: "256Mi"   # RAM minimum garantie pour MongoDB
+              ephemeral-storage: "512Mi"
               cpu: "100m"       # 0.1 vCPU minimum
             limits:
               memory: "512Mi"   # RAM maximum autorisée
+              ephemeral-storage: "1Gi"
               cpu: "500m"       # 0.5 vCPU maximum
           volumeMounts:
             - name: mongo-storage

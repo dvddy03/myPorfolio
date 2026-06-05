@@ -35,7 +35,13 @@ function AddProjectPage() {
       setLoading(false);
       setFormValues(initialForm);
       setInitialSnapshot(initialForm);
-      return () => {
+      function getButtonLabel(isSubmitting, editMode) {
+    if (isSubmitting) return "Enregistrement en cours...";
+    if (editMode) return "Enregistrer les changements";
+    return "Creer le projet";
+  }
+
+  return () => {
         mounted = false;
       };
     }
@@ -270,11 +276,7 @@ function AddProjectPage() {
 
         <div className="field-span-2 action-row">
           <button className="button-primary" type="submit" disabled={submitting}>
-            {submitting
-              ? "Enregistrement en cours..."
-              : isEditMode
-                ? "Enregistrer les changements"
-                : "Creer le projet"}
+            {getButtonLabel(submitting, isEditMode)}
           </button>
           <button
             className="button-secondary"

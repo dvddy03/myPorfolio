@@ -16,7 +16,7 @@ function ProjectDetailPage() {
       return;
     }
 
-    const confirmed = window.confirm(`Supprimer le projet "${project.title}" ?`);
+    const confirmed = globalThis.confirm(`Supprimer le projet "${project.title}" ?`);
     if (!confirmed) {
       return;
     }
@@ -25,7 +25,7 @@ function ProjectDetailPage() {
       await deleteProject(project._id);
       navigate("/projets");
     } catch (deleteError) {
-      window.alert(
+      globalThis.alert(
         deleteError instanceof Error ? deleteError.message : "Suppression impossible.",
       );
     }

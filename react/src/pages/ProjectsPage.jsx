@@ -33,7 +33,7 @@ function ProjectsPage() {
   });
 
   async function handleDelete(project) {
-    const confirmed = window.confirm(`Supprimer le projet "${project.title}" ?`);
+    const confirmed = globalThis.confirm(`Supprimer le projet "${project.title}" ?`);
     if (!confirmed) {
       return;
     }

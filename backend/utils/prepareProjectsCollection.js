@@ -10,7 +10,7 @@ async function prepareProjectsCollection() {
     }
   } catch (err) {
     // La collection n est pas encore creee (premiere execution) - pas un probleme
-    console.log("Collection projects non existante, elle sera creee au premier insert.");
+    console.log("Collection projects non existante, elle sera creee au premier insert.", err.message);
   }
 }
 

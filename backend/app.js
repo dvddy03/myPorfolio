@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 5000;
 const MONGODB_URI = process.env.MONGODB_URI || process.env.MONGO_URI;
 
 if (!MONGODB_URI) {
-  console.error("Variable d'environnement MONGODB_URI manquante.");
+  console.error("Variable MONGODB_URI manquante.");
   process.exit(1);
 }
 
@@ -33,16 +33,10 @@ app.use((err, _req, res, _next) => {
   res.status(status).json({ erreur: err.message });
 });
 
-mongoose
-  .connect(MONGODB_URI)
-  .then(async () => {
-    await prepareProjectsCollection();
-    console.log("Connecte a MongoDB Atlas");
-    app.listen(PORT, () => {
-      console.log(`Serveur demarre sur le port ${PORT}`);
-    });
-  })
-  .catch((err) => {
-    console.error("Erreur de connexion :", err.message);
-    process.exit(1);
-  });
+// Top-level await : connexion MongoDB puis démarrage du serveur
+await mongoose.connect(MONGODB_URI);
+await prepareProjectsCollection();
+console.log("Connecte a MongoDB");
+app.listen(PORT, () => {
+  console.log(`Serveur demarre sur le port ${PORT}`);
+});
