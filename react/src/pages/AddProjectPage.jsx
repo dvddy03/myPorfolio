@@ -35,12 +35,6 @@ function AddProjectPage() {
       setLoading(false);
       setFormValues(initialForm);
       setInitialSnapshot(initialForm);
-      function getButtonLabel(isSubmitting, editMode) {
-    if (isSubmitting) return "Enregistrement en cours...";
-    if (editMode) return "Enregistrer les changements";
-    return "Creer le projet";
-  }
-
   return () => {
         mounted = false;
       };
@@ -93,6 +87,12 @@ function AddProjectPage() {
       mounted = false;
     };
   }, [id, isEditMode]);
+
+  function getButtonLabel(isSubmitting, editMode) {
+    if (isSubmitting) return "Enregistrement en cours...";
+    if (editMode) return "Enregistrer les changements";
+    return "Creer le projet";
+  }
 
   async function handleSubmit(event) {
     event.preventDefault();
