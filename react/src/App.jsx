@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { NavLink, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import ProjectsPage from "./pages/ProjectsPage";
@@ -69,5 +70,10 @@ function NavItem({ to, children }) {
     </NavLink>
   );
 }
+
+NavItem.propTypes = {
+  to: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
+};
 
 export default App;

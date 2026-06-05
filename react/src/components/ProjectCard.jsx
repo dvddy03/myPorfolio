@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import TechBadge from "./TechBadge";
 import { getProjectImage } from "../utils/assets";
@@ -61,5 +62,19 @@ function ProjectCard({ project, onDelete }) {
     </article>
   );
 }
+
+ProjectCard.propTypes = {
+  project: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    summary: PropTypes.string,
+    category: PropTypes.string,
+    year: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    status: PropTypes.string,
+    coverTone: PropTypes.string,
+    technologies: PropTypes.arrayOf(PropTypes.string),
+  }).isRequired,
+  onDelete: PropTypes.func.isRequired,
+};
 
 export default ProjectCard;

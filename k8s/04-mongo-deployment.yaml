@@ -1,7 +1,6 @@
 # Deployment = le contrôleur qui gère les Pods.
-# Un Pod = la plus petite unité Kubernetes = 1 ou plusieurs conteneurs.
-# Le Deployment garantit que le bon nombre de replicas tourne en permanence.
-# Si un Pod plante, le Deployment en recrée un automatiquement.
+# automountServiceAccountToken: false = bonne pratique sécurité (SonarQube IaC S6473)
+# resources = limites CPU/RAM obligatoires en prod pour éviter qu'un pod consomme tout
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -10,27 +9,27 @@ metadata:
   labels:
     app: mongo
 spec:
-  replicas: 1        # 1 seule instance MongoDB (pas de sharding ici - but éducatif)
+  replicas: 1
   selector:
     matchLabels:
-      app: mongo     # Le Deployment gère les Pods qui ont le label app=mongo
+      app: mongo
   template:
     metadata:
       labels:
-        app: mongo   # Label appliqué à chaque Pod créé
+        app: mongo
     spec:
+      automountServiceAccountToken: false   # Désactive le token SA inutile (sécurité)
       containers:
         - name: mongo
-          image: mongo:7              # Même image que dans docker-compose.yml
+          image: mongo:7
           ports:
-            - containerPort: 27017   # Port sur lequel MongoDB écoute dans le conteneur
+            - containerPort: 27017
           env:
-            # Les valeurs viennent du Secret créé dans 01-secret.yaml
             - name: MONGO_INITDB_ROOT_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: mongodb-secret      # Nom du Secret
-                  key: mongo-root-username  # Clé dans le Secret
+                  name: mongodb-secret
+                  key: mongo-root-username
             - name: MONGO_INITDB_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -41,26 +40,30 @@ spec:
                 secretKeyRef:
                   name: mongodb-secret
                   key: mongo-db-name
+          resources:
+            requests:
+              memory: "256Mi"   # RAM minimum garantie pour MongoDB
+              cpu: "100m"       # 0.1 vCPU minimum
+            limits:
+              memory: "512Mi"   # RAM maximum autorisée
+              cpu: "500m"       # 0.5 vCPU maximum
           volumeMounts:
             - name: mongo-storage
-              mountPath: /data/db    # Chemin où MongoDB stocke ses données
+              mountPath: /data/db
       volumes:
         - name: mongo-storage
           persistentVolumeClaim:
-            claimName: mongo-pvc     # On utilise le PVC créé dans 03-mongo-pvc.yaml
+            claimName: mongo-pvc
 ---
-# Service = point d'entrée réseau stable pour atteindre les Pods.
-# Les Pods ont des IPs qui changent à chaque redémarrage.
-# Le Service a une IP fixe et redirige le trafic vers les Pods via les labels.
 apiVersion: v1
 kind: Service
 metadata:
-  name: mongo-service    # C'est ce nom que le backend utilise dans MONGODB_URI
+  name: mongo-service
   namespace: myportfolio
 spec:
   selector:
-    app: mongo           # Redirige vers les Pods avec label app=mongo
+    app: mongo
   ports:
-    - port: 27017        # Port du Service (utilisé par les autres pods)
-      targetPort: 27017  # Port du Pod MongoDB
-  type: ClusterIP        # ClusterIP = accessible uniquement à l'intérieur du cluster
+    - port: 27017
+      targetPort: 27017
+  type: ClusterIP

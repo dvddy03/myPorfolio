@@ -35,6 +35,9 @@ services:
     restart: unless-stopped
     ports:
       - "8080:80"
+    environment:
+      - NGINX_RESOLVER=127.0.0.11
+      - BACKEND_HOST=backend
     depends_on:
       - backend
     networks:
