@@ -9,6 +9,8 @@ pipeline {
         COMPOSE_PROJECT = "myportfolio"
         K8S_NAMESPACE   = "myportfolio"
         KUBECONFIG      = "/var/jenkins_home/.kube/config"
+        AWS_DEFAULT_REGION = "eu-west-3"
+        AWS_SHARED_CREDENTIALS_FILE = "/var/jenkins_home/.aws/credentials"
     }
 
     triggers { githubPush() }
@@ -77,14 +79,28 @@ pipeline {
             }
         }
 
-        stage("Deploy Kubernetes") {
+        stage("Deploy Minikube") {
             steps {
                 script {
+                    sh "kubectl config use-context minikube --kubeconfig=${KUBECONFIG}"
+                    sh "kubectl set image deployment/backend backend=${IMAGE_BACKEND}:${IMAGE_TAG} -n ${K8S_NAMESPACE} --kubeconfig=${KUBECONFIG}"
+                    sh "kubectl set image deployment/frontend frontend=${IMAGE_FRONTEND}:${IMAGE_TAG} -n ${K8S_NAMESPACE} --kubeconfig=${KUBECONFIG}"
+                    sh "kubectl rollout status deployment/backend -n ${K8S_NAMESPACE} --timeout=120s --kubeconfig=${KUBECONFIG}"
+                    sh "kubectl rollout status deployment/frontend -n ${K8S_NAMESPACE} --timeout=120s --kubeconfig=${KUBECONFIG}"
+                    sh "kubectl get pods -n ${K8S_NAMESPACE} --kubeconfig=${KUBECONFIG}"
+                }
+            }
+        }
+
+        stage("Deploy EKS") {
+            steps {
+                script {
+                    sh "kubectl config use-context arn:aws:eks:eu-west-3:587748224212:cluster/myportfolio-eks --kubeconfig=${KUBECONFIG}"
                     sh "kubectl get nodes --kubeconfig=${KUBECONFIG}"
-                    sh "kubectl set image deployment/backend-deployment backend=${IMAGE_BACKEND}:${IMAGE_TAG} -n ${K8S_NAMESPACE} --kubeconfig=${KUBECONFIG}"
-                    sh "kubectl set image deployment/frontend-deployment frontend=${IMAGE_FRONTEND}:${IMAGE_TAG} -n ${K8S_NAMESPACE} --kubeconfig=${KUBECONFIG}"
-                    sh "kubectl rollout status deployment/backend-deployment -n ${K8S_NAMESPACE} --timeout=120s --kubeconfig=${KUBECONFIG}"
-                    sh "kubectl rollout status deployment/frontend-deployment -n ${K8S_NAMESPACE} --timeout=120s --kubeconfig=${KUBECONFIG}"
+                    sh "kubectl set image deployment/backend backend=${IMAGE_BACKEND}:${IMAGE_TAG} -n ${K8S_NAMESPACE} --kubeconfig=${KUBECONFIG}"
+                    sh "kubectl set image deployment/frontend frontend=${IMAGE_FRONTEND}:${IMAGE_TAG} -n ${K8S_NAMESPACE} --kubeconfig=${KUBECONFIG}"
+                    sh "kubectl rollout status deployment/backend -n ${K8S_NAMESPACE} --timeout=180s --kubeconfig=${KUBECONFIG}"
+                    sh "kubectl rollout status deployment/frontend -n ${K8S_NAMESPACE} --timeout=180s --kubeconfig=${KUBECONFIG}"
                     sh "kubectl get pods -n ${K8S_NAMESPACE} --kubeconfig=${KUBECONFIG}"
                 }
             }
@@ -100,7 +116,8 @@ pipeline {
                 body: """Le pipeline a reussi !
 Build: #${env.BUILD_NUMBER}
 Portfolio Docker Compose : http://192.168.93.239:8080
-Portfolio Kubernetes     : http://192.168.49.2:30080
+Portfolio Minikube       : http://192.168.49.2:30080
+Portfolio EKS            : http://a8976107d488e498395d1c1225bec5e2-67bcae6fdeb95e76.elb.eu-west-3.amazonaws.com
 SonarQube                : http://192.168.93.239:9000/dashboard?id=myportfolio-pipeline
 Logs Jenkins             : ${env.BUILD_URL}""",
                 mimeType: "text/plain"
