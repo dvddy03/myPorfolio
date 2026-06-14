@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-config
+  namespace: myportfolio
+data:
+  NGINX_RESOLVER: "10.96.0.10"
+  BACKEND_HOST: "backend-service.myportfolio.svc.cluster.local"

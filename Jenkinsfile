@@ -116,7 +116,7 @@ pipeline {
                 body: """Le pipeline a reussi !
 Build: #${env.BUILD_NUMBER}
 Portfolio Docker Compose : http://192.168.93.239:8080
-Portfolio Minikube       : http://192.168.49.2:30080
+Portfolio Minikube       : http://192.168.100.2:30080
 Portfolio EKS            : http://a8976107d488e498395d1c1225bec5e2-67bcae6fdeb95e76.elb.eu-west-3.amazonaws.com
 SonarQube                : http://192.168.93.239:9000/dashboard?id=myportfolio-pipeline
 Logs Jenkins             : ${env.BUILD_URL}""",
